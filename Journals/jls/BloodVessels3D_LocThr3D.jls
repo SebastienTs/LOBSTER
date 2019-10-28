@@ -1,0 +1,16 @@
+% Data section
+InputFolder = './Images/BloodVessels3D/';
+OutputFolder = './Results/Images/BloodVessels3D/';
+SaveOutput = 1;
+ZRatio = 3;
+Shw = 2;
+PointSize = 5;
+
+% Threshold
+params.Sigmas = [2 2 1.5];
+params.MeanBox = [15 15 9];
+params.AddThr = 1;
+params.IgnoreZero = 0;
+params.DoubleThr = 0;
+params.MinVol = 500;
+O = fxg_mLocThr3D(I, params);

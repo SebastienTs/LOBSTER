@@ -1,0 +1,17 @@
+% Data section
+InputFolder = './Images/CellPilar3D/';
+OutputFolder = './Results/Images/CellPilar3D_brcks/';
+Shw = 1;
+Brick = 128;
+GuardBand = 64;
+
+% Display section
+PointSize = 5;
+SaveOutput = 1;
+
+% Threshold
+params.Sigmas = [2 2 2];
+params.MeanBox = [15 15 9];
+params.AddThr = 25;
+params.IgnoreZero = 0;
+O = fxg_mLocThr3D(I, params);

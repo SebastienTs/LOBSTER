@@ -1,0 +1,23 @@
+InputFolder = './Images/DividingCellsMovie/';
+%FixedInput = './Images/DividingCellsMovie/Annotations/Annotations.tif';
+OutputFolder = './Results/Images/DividingCellsMovie/';
+
+% Display section
+Shw = 3;
+SaveOutput = 1;
+
+% Pipeline section
+params.Sigmas = [3 3 1];
+params.LocalMaxBox = [5 5 3];
+params.NrmLoG = 1;
+params.MinLoG = 0.05;
+params.MinDst = 0;
+O = fxg_sLoG3DLocMax3D(I, params);
+
+params.FeatType = 'Deep';
+params.BoxRad = 15;
+params.Expand = 1;
+params.ClassifierFile = './Classifiers/ClassifierDividingCells_deepnet.mat';
+params.ExportAnnotations = './Images/DividingCellsMovie/Annotations/Annotation_DividingCells_deepnet.tif';
+params.MaxDisplay = 127;
+O = fxgs_lPatchClassify3D(I, O, I2, params);

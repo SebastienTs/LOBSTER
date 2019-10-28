@@ -1,0 +1,8 @@
+Matlab does not allow class specification of an output variable, so outputs must all be inputs to allow class specification.
+
+Changed all array ouputs "[OUT]" to "[In, Out] ref" expect "[Out] out" commands.
+
+Project files are now Visual Studio (Express) 2008 versions.
+
+If you install Tao do not register the .dll files otherwise they will interfere
+with these Taolight .dll files (Tao normally registers its dll assemblies to global GAC cache)

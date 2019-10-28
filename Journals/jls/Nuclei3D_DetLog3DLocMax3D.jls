@@ -1,0 +1,16 @@
+% Data section
+InputFolder = './Images/Nuclei3D/';
+OutputFolder = './Results/Images/Nuclei3D/';
+
+% Display section
+Shw = 1;
+ZRatio = 4;
+Dilate = 2;
+SaveOutput = 1;
+
+params.Sigmas = [4 4 4];
+params.LocalMaxBox = [5 5 3];
+params.NrmLoG = 1;
+params.MinLoG = 0.1;
+params.MinDst = 0;
+O = fxg_sLoG3DLocMax3D(I, params);

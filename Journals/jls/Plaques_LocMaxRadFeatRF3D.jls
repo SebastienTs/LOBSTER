@@ -1,0 +1,26 @@
+InputFolder = './Images/Plaques3D/Image/';
+%FixedInput = './Images/Plaques3D/Annotations/Annotations.tif';
+OutputFolder = './Results/Images/Plaques3D/';
+
+% Display section
+Shw = 3;
+SaveOutput = 1;
+
+% Pipeline section
+params.Sigmas = [3 3 3];
+params.LocalMaxBox = [3 3 3];
+params.NrmLoG = 1;
+params.MinLoG = 0.1;
+params.MinDst = 0;
+O = fxg_sLoG3DLocMax3D(I, params);
+
+params.FeatType = 'RadFeat3D';
+params.ScanRad = 5;
+params.ScanStep = 1;
+params.NAngles = 8;
+params.NAngles2 = 8;
+params.ClassifierType = 'RF';
+params.ClassifierFile = './Classifiers/ClassifierPlaques_RadFeat3DRF.mat';
+params.ExportAnnotations = './Images/Plaques3D/Annotations/Annotation_Plaques3D.tif';
+params.MaxDisplay = 127;
+O = fxgs_lPatchClassify3D(I, O, I2, params);

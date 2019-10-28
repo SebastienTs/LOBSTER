@@ -1,0 +1,34 @@
+% Data section
+InputFolder = './Images/Brain3D/';
+OutputFolder = './Results/Images/Brain3DSkl/';
+
+% Display/export section
+SaveOutput = 1;
+ZRatio = 1.5;
+Shw = 3;
+RunProj = 4;
+PointSize = 7;
+
+% Threshold
+params.Sigmas = [1 1 1];
+params.MeanBox = [15 15 9];
+params.AddThr = 8;
+params.IgnoreZero = 0;
+params.DoubleThr = 0;
+params.MinVol = 0;
+M = fxg_mLocThr3D(I, params);
+
+% Skeletonize
+params.PreCloseRad = 0;
+params.Min2DHolesArea = 5;
+params.MinVol = 50;
+O = fxm_kSkl3D(M, params);
+
+% Label skeleton
+params.SklLbl = 1;
+params.MinBrchLgth = 5;
+params.MinBrchLgth2 = 5;
+params.MaxIter = 1;
+params.Ignore4Way = 1;
+params.ZRatio = ZRatio;
+O = fxk_kSklLbl3D(O, params);

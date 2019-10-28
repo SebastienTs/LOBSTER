@@ -1,0 +1,18 @@
+% Data section
+InputFolder = './Images/LymphGland3D/';
+OutputFolder = './Results/Images/LymphGland3D/';
+ZRatio = 4;
+SaveOutput = 1;
+
+% Display section
+Shw = 1;
+PointSize = 1;
+Dilate = 2;
+
+% Pipeline section
+params.Sigmas = [3 3 3];
+params.LocalMaxBox = [3 3 3];
+params.NrmLoG = 1;
+params.MinLoG = 0.05;
+params.MinDst = 0;
+O = fxg_sLoG3DLocMax3D(I, params);

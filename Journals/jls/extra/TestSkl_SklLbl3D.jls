@@ -1,0 +1,16 @@
+% Data section
+InputFolder = './Images/TestSkl/';
+OutputFolder = './Results/Images/TestSkl/';
+
+% Display/export section
+SaveOutput = 0;
+ZRatio = 3;
+Shw = 3;
+RunProj = 4;
+PointSize = 5;
+
+% Clean / label skeleton
+params.SklLbl = 1;
+params.MinBrchLgth = 10;
+params.MaxIter = 3;
+O = fxk_kSklLbl3D(I, params);

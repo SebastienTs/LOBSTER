@@ -1,0 +1,19 @@
+% Data section
+InputFolder = './Images/BloodVessels3D/';
+OutputFolder = './Results/Images/BloodVessels3D/';
+
+% Display section
+Shw = 0;
+ZRatio = 2;
+SaveOutput = 0;
+
+% Pipeline section
+params.ZRatio = 3;
+params.GRad = 3;
+params.Thr = 1;
+params.Dist = 9;
+params.Steps = 9;
+params.VoteMode = 1;
+params.ResRad = 0.5;
+params.PowerLaw = 1;
+O = fxg_gTubesToFilaments3D(I, params);

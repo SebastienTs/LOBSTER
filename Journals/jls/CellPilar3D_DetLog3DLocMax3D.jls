@@ -1,0 +1,17 @@
+% Data section
+InputFolder = './Images/CellPilar3D/';
+OutputFolder = './Results/Images/CellPilar3D/';
+Shw = 3;
+Dilate = 2;
+
+% Display section
+PointSize = 5;
+SaveOutput = 1;
+
+% Pipeline section
+params.Sigmas = [4 4 4];
+params.LocalMaxBox = [7 7 5];
+params.NrmLoG = 1;
+params.MinLoG = 0.1;
+params.MinDst = 7;
+O = fxg_sLoG3DLocMax3D(I, params);

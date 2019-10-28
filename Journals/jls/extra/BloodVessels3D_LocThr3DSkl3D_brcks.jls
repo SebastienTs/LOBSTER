@@ -1,0 +1,21 @@
+% Data section
+InputFolder = './Images/BloodVessels3D/';
+OutputFolder = './Results/Images/BloodVessels3DSkl_brcks/';
+SaveOutput = 1;
+ZRatio = 3;
+Brick = 256;
+GuardBand = 64;
+Shw = 3;
+
+% Threshold
+params.Sigmas = [2 2 2];
+params.MeanBox = [15 15 9];
+params.AddThr = 2;
+params.IgnoreZero = 0;
+M = fxg_mLocThr3D(I, params);
+
+% Skeletonize
+params.PreCloseRad = 0;
+params.Min2DHolesArea = 50;
+params.MinVol = 50;
+O = fxm_kSkl3D(M, params);

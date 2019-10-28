@@ -1,0 +1,35 @@
+% Data section
+InputFolder = './Images/BloodVessels3D/';
+OutputFolder = './Results/Images/BloodVessels3DSkl/';
+
+% Display/export section
+SaveOutput = 1;
+ZRatio = 2;
+Shw = 3;
+RunProj = 0;
+PointSize = 5;
+
+% Threshold
+params.Sigmas = [2 2 1.5];
+params.MeanBox = [15 15 9];
+params.AddThr = 1;
+params.IgnoreZero = 0;
+params.DoubleThr = 0;
+params.MinVol = 500;
+M = fxg_mLocThr3D(I, params);
+
+% Skeletonize
+params.PreCloseRad = 0;
+params.Min2DHolesArea = 5;
+params.MinVol = 100;
+params.MinVol = 10;
+O = fxm_kSkl3D(M, params);
+
+% Label skeleton
+params.SklLbl = 1;
+params.MinBrchLgth = 11;
+params.MinBrchLgth2 = 3;
+params.MaxIter = 1;
+params.Ignore4Way = 1;
+params.ZRatio = ZRatio;
+O = fxk_kSklLbl3D(O, params);

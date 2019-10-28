@@ -1,0 +1,13 @@
+% Data section
+InputFolder = './Images/TestMovie3D/';
+OutputFolder = './Results/Images/TestMovie3DDstLbl/';
+Shw = -1;
+
+% Pipeline section
+params.MinPartArea = 3;
+params.MaxAreaVar = 45;
+params.MaxDisp = 40^2;
+params.MaxRescue = 3;
+params.RemoveEdgeObj = 1;
+params.EnforceOverlap = 0;
+fxm_lTrackerDst3D(InputFolder,OutputFolder,params);

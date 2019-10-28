@@ -1,0 +1,16 @@
+% Data section
+InputFolder = './Images/TestNetwork/';
+OutputFolder = './Results/Images/TestNetwork_brcks/';
+Brick = 64;
+GuardBand = 16;
+
+% Display/export section
+SaveOutput = 1;
+ZRatio = 3;
+Shw = 3;
+
+% Skeletonize
+params.PreCloseRad = 0;
+params.Min2DHolesArea = 0;
+params.MinVol = 0;
+O = fxm_kSkl3D(uint8(255*(I>0)), params);

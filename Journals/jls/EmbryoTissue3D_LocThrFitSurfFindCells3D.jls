@@ -1,0 +1,34 @@
+% Data section
+InputFolder = './Images/EmbryoTissue3D/';
+OutputFolder = './Results/Images/EmbryoTissue3D/';
+
+% Display section
+Shw = 3;
+NCols = 32;
+ZRatio = 4;
+RunProj = 16;
+SaveOutput = 1;
+PointSize = 3;
+
+% Pipeline section
+params.Sigmas = [1 1 1];
+params.MeanBox = [5 5 5];
+params.AddThr = 20;
+params.IgnoreZero = 0;
+params.DoubleThr = 0;
+params.MinVol = 0;
+M = fxg_mLocThr3D(I, params);
+
+params.MinArea = 10;
+params.MaxArea = Inf;
+M = fxm_mFilterObjSize(M, params);
+
+params.ZRatio = ZRatio;
+params.Scl = 2;
+params.Smoothness = 0.001;
+params.ComputeArea = 0;
+S = fxm_mFitSurf3D(M, params);
+
+params.DmapBlurRad = 1.5;			
+params.MinMaxHeight = 0.35;
+O = fxsm_sSeedTissue3D(M, S, params);	

@@ -1,0 +1,12 @@
+% Data section
+InputFolder = './Images/TestMovie3D/';
+OutputFolder = './Results/Images/TestMovie3DOvlLbl/';
+Shw = -1;
+
+% Pipeline section
+params.SharePenality = 0.33;
+params.AlphaCM = 0.33;
+params.SmallPart = 0;
+params.OvlItExtend = 0;
+params.MaxRescueDistance = 48;
+fxm_lTrackerOvl3D(InputFolder,OutputFolder,params);

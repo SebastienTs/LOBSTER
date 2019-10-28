@@ -1,0 +1,10 @@
+InputFolder = './Images/PointVoronoi3D/';
+OutputFolder = './Results/Images/Voronoi3D/';
+SaveOutput = 1;
+
+% Display section
+Shw = 0;
+
+% Pipeline section
+params.ovs = 1;
+[O] = fxs_gVoronoi3D(I, params);

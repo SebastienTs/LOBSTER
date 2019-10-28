@@ -1,0 +1,34 @@
+% Data section
+InputFolder = './Images/CellPilar3D/';
+OutputFolder = './Results/Images/CellPilar3DLbl/';
+
+% Display section
+Shw = 3;
+NCols = 32;
+ZRatio = 1;
+SaveOutput = 1;
+PointSize = 3;
+%Brick = 128;
+
+% Pipeline section
+params.Sigmas = [4 4 4];
+params.LocalMaxBox = [7 7 5];
+params.NrmLoG = 1;
+params.MinLoG = 0.1;
+params.MinDst = 7;
+L = fxg_sLoG3DLocMax3D(I, params);
+
+params.Sigmas = [1.5 1.5 1.5];	
+params.MeanBox = [15 15 11];
+params.AddThr = 4;
+params.IgnoreZero = 0;
+params.DoubleThr = 0;
+params.MinVol = 0;
+M = fxg_mLocThr3D(I, params);
+				
+params.BckSeedLvl = 0;
+params.Power = 0.5;
+params.SeedsDilRad = 0;
+params.AnalyzeCC = 1;
+params.MinVol = 350;
+O = fxgs_lSeededPropagate3D(I,L,M,params);

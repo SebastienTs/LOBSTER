@@ -1,0 +1,8 @@
+% Data section
+InputFolder = './Images/TestTextures3D/';
+OutputFolder = './Results/Images/TestTextures3D/';
+SaveOutput = 0;
+ZRatio = 1;
+Shw = 4;
+
+O = uint8(I);

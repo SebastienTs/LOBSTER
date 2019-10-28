@@ -1,0 +1,15 @@
+InputFolder = './Images/Neurons3D/';
+OutputFolder = './Results/Images/Neurons3D/';
+FixedInput = './Images/Neurons3D/PSF/PSF_Neurons.tif';
+Shw = 0;
+SaveOutput = 1;
+
+params.type = 'rl';
+params.wnr3Dnsr = 2;
+params.regnoise = 2;
+params.rlit = 15;
+params.Model_sep = 0;
+params.Brick = 0;
+params.BrckSize = 256;
+params.GuardBand = 16;
+O = fxg_gDeconv3D(I, I2, params);

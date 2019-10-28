@@ -1,0 +1,1 @@
+Note: The original code has been heavily edited by Sébastien Tosi from version 1.0.0.0

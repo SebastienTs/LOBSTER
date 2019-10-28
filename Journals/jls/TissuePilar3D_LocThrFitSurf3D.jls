@@ -1,0 +1,26 @@
+% Data section
+InputFolder = './Images/TissuePilar3D/';
+OutputFolder = './Results/Images/TissuePilar3DSurf/';
+Step = 3;
+Offset = 0;
+
+% Display section
+Shw = 1;
+NCols = 32;
+ZRatio = 3;
+SaveOutput = 1;
+
+% Pipeline section
+params.Sigmas = [1 1 1];
+params.MeanBox = [7 7 5];
+params.AddThr = 2;
+params.IgnoreZero = 0;
+params.DoubleThr = 0;
+params.MinVol = 0;
+S = fxg_mLocThr3D(I, params);
+
+params.ZRatio = 2;				% ZRatio of the stack
+params.Scl = 4;					% Undersampling factor to estimate surface points
+params.Smoothness = 0.001;		% Smoothness of the fitted surface
+params.ComputeArea = 0;			% Compute the area of the surface
+O = fxm_mFitSurf3D(S, params);

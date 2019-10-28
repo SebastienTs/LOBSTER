@@ -1,0 +1,12 @@
+% Data section
+InputFolder = './Images/PIV/';
+OutputFolder = './Results/Images/PIV/';
+Shw = 2;
+
+% Pipeline section
+params.iaSize = [64 32];
+params.iaStep = [32 16];
+params.Methods = {'fft' 'fft'};
+params.MinCC = 0.3;
+params.imMask = './Images/PIV_mask/PIVlab_Karman_mask.tif';
+fxg_gmPIV(InputFolder,OutputFolder,params);

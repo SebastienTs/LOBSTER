@@ -1,0 +1,13 @@
+% Data section
+InputFolder = './Images/TestNetwork/';
+OutputFolder = './Results/Images/TestNetwork3DSklGeod/';
+SaveOutput = 1;
+ZRatio = 3;
+Shw = 3;
+
+% Threshold
+O = uint8(I>0);
+
+% Skeletonize
+params.Step = 5;
+O = fxm_kSklGeod3D(O, params);

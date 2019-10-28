@@ -1,0 +1,9 @@
+% Data section
+InputFolder = './Results/Images/TissueSimpleMovie/Movie1/';
+OutputFolder = './Results/Images/TissueSimpleMovieLbl/Movie1/';
+Shw = 1;
+
+% Pipeline section
+params.ShareAreaFrc = 0.4;
+params.WinAreaFrc = 0.8;
+fxm_lTrackerMemb(InputFolder,OutputFolder,params);

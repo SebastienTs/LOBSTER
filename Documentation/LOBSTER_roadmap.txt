@@ -1,0 +1,15 @@
+Optimization:
+1) Optimize computing intensive functions (memory usage, speed)
+2) Test
+
+Content:
+1)	Add new sample journal: Nuclei tracking in 3D movies (NucleiMovie3D)
+
+Features (by order of priority):
+1) STL / SWC stitchers
+2) Add local filament width to SWC export
+
+Other ideas (unsure):
+1) Image classification (Phenoripper like)?
+2) Job designer (wizard)?
+3) Knossos or Mamut exporter?

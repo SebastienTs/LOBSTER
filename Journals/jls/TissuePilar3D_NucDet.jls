@@ -1,0 +1,20 @@
+% Data section
+InputFolder = './Images/TissuePilar3D/';
+OutputFolder = './Results/Images/TissuePilar3DNucDet/';
+Step = 3;
+Offset = 2;
+
+% Display section
+SaveOutput = 1;
+Dilate = 2;
+Shw = 1;
+NCols = 32;
+ZRatio = 3;
+
+% Pipeline section
+params.Sigmas = [3 3 3];
+params.LocalMaxBox = [5 5 3];
+params.NrmLoG = 1;
+params.MinLoG = 0.05;
+params.MinDst = 0;
+O = fxg_sLoG3DLocMax3D(I, params);

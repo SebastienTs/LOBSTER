@@ -1,0 +1,25 @@
+% Data section
+InputFolder = './Images/Nuclei3D/';
+OutputFolder = './Results/Images/Nuclei3D2/';
+
+% Display section
+Shw = 1;
+ZRatio = 4;
+SaveOutput = 0;
+
+% Pipeline section
+params.ZRatio = 3;
+params.GRad = 3;
+params.Thr = 1;
+params.Dist = 11;
+params.Steps = 11;
+params.VoteMode = 1;
+params.ResRad = 2;
+params.PowerLaw = 1;
+O = fxg_gTubesToFilaments3D(I, params);
+
+params.Sigmas = [1 1 1];
+params.LocalMaxBox = [5 5 5];
+params.ThrLocalMax = 50;
+params.Polarity = 1;
+O = fxg_sLocMax3D(O, params);

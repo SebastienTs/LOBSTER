@@ -1,0 +1,16 @@
+% Data section
+InputFolder = './Images/TestNetwork/';
+OutputFolder = './Results/Images/TestNetwork/';
+
+% Display/export section
+SaveOutput = 1;
+ZRatio = 3;
+Shw = 3;
+RunProj = 4;
+PointSize = 5;
+
+% Skeletonize
+params.PreCloseRad = 0;
+params.Min2DHolesArea = 0;
+params.MinVol = 0;
+O = fxm_kSkl3D(I, params);

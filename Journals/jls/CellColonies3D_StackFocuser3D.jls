@@ -1,0 +1,17 @@
+% Data section
+InputFolder = './Images/CellColonies3D/';
+OutputFolder = './Results/Images/CellColonies3D/';
+
+% Display section
+Shw = 0;
+SaveOutput = 1;
+
+% Pipeline section
+params.WSize = 25;
+params.Sth = 13;				
+params.Alpha = 0.2;
+O1 = fxg_gStackFocuser3D(I, params);
+
+params.Scale = 0.25;
+params.Rad = 25;
+O = fxg_gIllumCorr(O1, params);

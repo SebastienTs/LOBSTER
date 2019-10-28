@@ -1,0 +1,20 @@
+% Data section
+InputFolder = './Images/BloodVessels3D/';
+OutputFolder = './Results/Images/BloodVessels3DSklGeod/';
+SaveOutput = 1;
+ZRatio = 3;
+Shw = 3;
+RunProj = 1;
+
+% Threshold
+params.Sigmas = [2 2 1.5];
+params.MeanBox = [15 15 9];
+params.AddThr = 2;
+params.IgnoreZero = 0;
+params.DoubleThr = 0;
+params.MinVol = 0;
+O = fxg_mLocThr3D(I, params);
+
+% Skeletonize
+params.Step = 7;
+O = fxm_kSklGeod3D(O, params);

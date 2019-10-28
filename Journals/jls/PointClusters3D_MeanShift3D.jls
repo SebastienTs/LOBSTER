@@ -1,0 +1,16 @@
+% Data section
+InputFolder = './Images/PointClusters3D/';
+OutputFolder = './Results/Images/PointClusters3D/';
+SaveOutput = 1;
+
+% Display section
+Shw = 3;
+PointSize = 5;
+ZRatio = 4;
+Dilate = 2;
+
+% Pipeline section
+params.ZRatio = 10;
+params.Bandwidth = 75;
+params.MinPts = 0;
+[S O] = fxs_lMeanShift3D(I, params);

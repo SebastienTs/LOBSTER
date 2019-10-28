@@ -1,0 +1,13 @@
+% Data section
+InputFolder = './Images/FakeTrackMovie/Movie1/';
+OutputFolder = './Results/Images/FakeTrackDstLbl/Movie1/';
+Shw = 1;
+
+% Pipeline section
+params.MinPartArea = 3;
+params.MaxAreaVar = 45;
+params.MaxDisp = 40^2;
+params.MaxRescue = 3;
+params.RemoveEdgeObj = 1;
+params.EnforceOverlap = 0;
+fxm_lTrackerDst(InputFolder,OutputFolder,params);
