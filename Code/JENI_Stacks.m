@@ -1,6 +1,9 @@
 % 3D image journal engine (should be called from JENI!!)
 function [InputFolder OutputFolder] = JENI_Stacks(Journal,ForceInputFolder,ForceOutputFolder)
  
+    %% Used to simulate key stroke upon window closing
+    robot = java.awt.Robot;
+
     %% Display information to console
     disp(strcat('Journal: <a href="matlab: opentoline(''',Journal,''',1)">',Journal,'</a>-->','<a href="matlab:JENI(''',Journal,''');">Launch</a>'));
     
@@ -474,18 +477,18 @@ function [InputFolder OutputFolder] = JENI_Stacks(Journal,ForceInputFolder,Force
             if Shw == 0
                 
                 %% Display input
-                handle2 = figure('Name','Input');
-                set(handle2, 'Position', [8 screensize(4)-680 768 512]);
+                hdl2 = figure('Name','Input');
+                set(hdl2, 'Position', [8 screensize(4)-680 768 512]);
                 set(gcf,'Name','Press x to continue, (q) interrupt, (m) toggle mask, (z) adjust local zproj, (r) send subvolume to renderer','NumberTitle','off');
-                tool = imtool3D(I,[0 0 1 1],handle2);
+                tool = imtool3D(I,[0 0 1 1],hdl2);
                 setWindowLevel(tool,2*MaxDisplay,MaxDisplay);
                 setCurrentSlice(tool,round(size(I,3)/2));
                 
                 %% Display output
-                handle = figure('Name','Output');
-                set(handle, 'Position', [8 screensize(4)-680 768 512]);
+                hdl = figure('Name','Output');
+                set(hdl, 'Position', [8 screensize(4)-680 768 512]);
                 set(gcf,'Name','Press x to continue, (q) interrupt, (m) toggle mask, (z) adjust local zproj, (r) send subvolume to renderer','NumberTitle','off');
-                tool = imtool3D(O,[0 0 1 1],handle);
+                tool = imtool3D(O,[0 0 1 1],hdl);
                 setWindowLevel(tool,2*MaxDisplay,MaxDisplay);
                 
                 %% Make sure that the image is really a stack (not a projection)                
@@ -496,10 +499,10 @@ function [InputFolder OutputFolder] = JENI_Stacks(Journal,ForceInputFolder,Force
             
             %% Display input in as stack browser and output as overlay mask
             if Shw == 1
-                handle = figure('Name','Input + binary mask overlay');
-                set(handle, 'Position', [8 screensize(4)-680 768 512]);
+                hdl = figure('Name','Input + binary mask overlay');
+                set(hdl, 'Position', [8 screensize(4)-680 768 512]);
                 set(gcf,'Name','Press x to continue, (q) interrupt, (m) toggle mask, (z) adjust local zproj, (r) send subvolume to renderer','NumberTitle','off');
-                tool = imtool3D(I,[0 0 1 1],handle);
+                tool = imtool3D(I,[0 0 1 1],hdl);
                 setWindowLevel(tool,2*MaxDisplay,MaxDisplay);
                 setCurrentSlice(tool,round(size(I,3)/2));
                 if isequal(size(I), size(O))
@@ -511,10 +514,10 @@ function [InputFolder OutputFolder] = JENI_Stacks(Journal,ForceInputFolder,Force
             %% Display input in as stack browser and output as outlined overlay mask
             if Shw == 2
                 Markerse = [[0 1 0];[1 1 1];[0 1 0]];
-                handle = figure('Name','Input + binary mask contours overlay');
-                set(handle, 'Position', [8 screensize(4)-680 768 512]);
+                hdl = figure('Name','Input + binary mask contours overlay');
+                set(hdl, 'Position', [8 screensize(4)-680 768 512]);
                 set(gcf,'Name','Press x to continue, (q) interrupt, (m) toggle mask, (z) adjust local zproj, (r) send subvolume to renderer','NumberTitle','off');
-                tool = imtool3D(I,[0 0 1 1],handle);
+                tool = imtool3D(I,[0 0 1 1],hdl);
                 setWindowLevel(tool,2*MaxDisplay,MaxDisplay);
                 setCurrentSlice(tool,round(size(I,3)/2));
                 setMask(tool,(255*(imdilate(O,Markerse)-O)>0));
@@ -531,10 +534,10 @@ function [InputFolder OutputFolder] = JENI_Stacks(Journal,ForceInputFolder,Force
                 if isa(O,'uint16');
                     O = single(O);
                 end
-                handle = figure('Name','Input + label mask overlay');
-                set(handle, 'Position', [8 screensize(4)-680 768 512]);
+                hdl = figure('Name','Input + label mask overlay');
+                set(hdl, 'Position', [8 screensize(4)-680 768 512]);
                 set(gcf,'Name','Press x to continue, (q) interrupt, (m) toggle mask, (z) adjust local zproj, (r) send subvolume to renderer','NumberTitle','off');
-                tool = imtool3DLbl(I,[0 0 1 1],handle);
+                tool = imtool3DLbl(I,[0 0 1 1],hdl);
                 setWindowLevel(tool,2*MaxDisplay,MaxDisplay);
                 setCurrentSlice(tool,round(size(I,3)/2));
                 setMask(tool,O);
@@ -616,14 +619,23 @@ function [InputFolder OutputFolder] = JENI_Stacks(Journal,ForceInputFolder,Force
                 Form1.TopMost = true;
             end
             
+            %% Automatic key stroke upon window closing
+            set(hdl,'CloseRequestFcn',['delete(1);pause(0.05);robot.keyPress(java.awt.event.KeyEvent.VK_ENTER);']);
+            if exist('hdl2','var')
+                set(hdl,'CloseRequestFcn',['delete(2);pause(0.05);robot.keyPress(java.awt.event.KeyEvent.VK_ENTER);']);
+            end
+            
             %% Wait to continue
+            disp(' ');
+            disp('Press x to continue');
             if Shw >-1
+                
             if Shw >=0 & Shw <=3
                 % Prevent closing current figure
-                set(handle,'CloseRequestFcn','disp(''Press X to continue'')');
                 follow = false;
                 while follow == false
                     pause;
+                    if isvalid(hdl)
                     Mode = get(gcf,'CurrentKey');
                     switch Mode
                         case 'm'
@@ -695,12 +707,17 @@ function [InputFolder OutputFolder] = JENI_Stacks(Journal,ForceInputFolder,Force
                             delete(H);
                         case 'x'
                             follow = true;
-                            delete(handle);
+                            delete(hdl);
                             close all;
                         case 'q'
-                            delete(handle);
+                            delete(hdl);
                             close all;
                             error('Program terminated by user');
+                        otherwise
+                            disp('Press x to continue');
+                        end
+                    else
+                        follow = true;
                     end
                 end
             else

@@ -1,6 +1,6 @@
 % 2D image journal engine (should be called from JENI!!)
-function [InputFolder OutputFolder] = JENI_Images(Journal,ForceInputFolder,ForceOutputFolder,ForceChan)
-
+function [InputFolder OutputFolder] = JENI_Images(Journal,ForceInputFolder,ForceOutputFolder,ForceChan)  
+    
     %% Display information to console
     disp(strcat('Journal: <a href="matlab: opentoline(''',Journal,''',1)">',Journal,'</a>-->','<a href="matlab:JENI(''',Journal,''');">Launch</a>'));
     
@@ -278,23 +278,35 @@ function [InputFolder OutputFolder] = JENI_Images(Journal,ForceInputFolder,Force
                     end
                     setAlpha(tool,1);
                 end
-                set(gcf,'Name',[shwi{i},' (',num2str(img), ') - Press x to continue, (q) interrupt, (m) toggle mask'],'NumberTitle','off');
-                set(handle(i),'CloseRequestFcn','disp(''Press X to continue'')');
+                if exist('tool','var')
+                    set(gcf,'Name',[shwi{i},' (',num2str(img), ') - Press x to continue, (q) interrupt, (m) toggle mask'],'NumberTitle','off');
+                else
+                    set(gcf,'Name',[shwi{i},' (',num2str(img), ') - Press x to continue, (q) interrupt'],'NumberTitle','off');
+                end
+                
+                %% Automatic key stroke upon windows closing
+                robot = java.awt.Robot;
+                set(handle(i),'CloseRequestFcn',['delete(handle(' num2str(i) '));pause(0.05);robot.keyPress(java.awt.event.KeyEvent.VK_ENTER);']);
+                
             end
+            disp(' ');
+            disp('Press x to continue');
             if numel(indshows)>0
                 follow = false;
                 while follow == false
                     pause;
-                    if isvalid(handle) 
+                    if isvalid(handle(i))
                         Mode = get(gcf,'CurrentKey');
                         switch Mode
                             case 'm'
-                                %% Toggle annotations
-                                ShowAnnot = ~ShowAnnot;
-                                if ShowAnnot == false
-                                    setAlpha(tool,0);
-                                else
-                                    setAlpha(tool,1);
+                                if exist('tool','var')
+                                    %% Toggle annotations
+                                    ShowAnnot = ~ShowAnnot;
+                                    if ShowAnnot == false
+                                        setAlpha(tool,0);
+                                    else
+                                        setAlpha(tool,1);
+                                    end
                                 end
                             case 'x'
                                 follow = true;
@@ -308,6 +320,8 @@ function [InputFolder OutputFolder] = JENI_Images(Journal,ForceInputFolder,Force
                                 end
                                 close all;
                                 error('Program terminated by user');
+                            otherwise
+                                disp('Press x to continue');
                         end
                     else
                         follow = true;
@@ -316,6 +330,7 @@ function [InputFolder OutputFolder] = JENI_Images(Journal,ForceInputFolder,Force
                 close all;
                 pause(0.05);
             end
+            
             end
             
         else
