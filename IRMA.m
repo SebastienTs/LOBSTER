@@ -1117,11 +1117,11 @@ function ReportFolder = IRMA(varargin)
                     
                     Rstore.name = Files(i).name;
                     
-                    %% Initialization
-                    for it = 1:2
+                    %% it can be used to threshold M at different levels
+                    for it = 1:1
                         
                         Rstore.dil = smp;
-                        if(it==1)
+                        if(it == 2)
                             R = (M>=SeedsValue);
                         else
                             R = (M>=SklEndpts);
@@ -1171,11 +1171,16 @@ function ReportFolder = IRMA(varargin)
                             %% Probabilistic co-localization / independence
                             NAx = sum(R(:)&~K(:));
                             NBx = sum(K(:)&~R(:));
-                            %Rstore.alpha = NC*N/((NC+NBx)*(NC+NAx));
-                            Rstore.alpha = NC*(N-NBx-NC)/(NAx*(NC+NBx));
-                            %Rstore.beta = NBx*N/((NC+NBx)*(N-NAx-NC));
-                            Rstore.beta = NBx*(N-NBx-NC)/((N-NAx-NBx-NC)*(NC+NBx));
-
+							ND = sum(~K(:)&~R(:));
+                            % P(R+|G+)/P(R+)
+                            %Rstore.alpha = NC*N/(NA*NB);
+							% P(R+|G+)/P(R+|G-)
+							Rstore.alpha = NC*(N-NB)/(NBx*(NB));
+							% P(R-|G+)/P(R-)
+							%Rstore.beta = NBx*N/(NB*(N-NA));
+							% P(R-|G+)/P(R-|G-)
+							%Rstore.beta = NBx*(N-NA)/((N-NAx-NBx-NC)*(NC+NBx));
+							Rstore.beta = NAx*(N-NB)/((N-NAx-NBx-NC)*(N-NA));
                         end
 
                         %% TP/FP/FN
