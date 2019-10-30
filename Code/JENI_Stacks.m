@@ -620,7 +620,9 @@ function [InputFolder OutputFolder] = JENI_Stacks(Journal,ForceInputFolder,Force
             end
             
             %% Automatic key stroke upon window closing
-            set(hdl,'CloseRequestFcn',['delete(1);pause(0.05);robot.keyPress(java.awt.event.KeyEvent.VK_ENTER);']);
+            if exist('hdl','var')
+                set(hdl,'CloseRequestFcn',['delete(1);pause(0.05);robot.keyPress(java.awt.event.KeyEvent.VK_ENTER);']);
+            end
             if exist('hdl2','var')
                 set(hdl,'CloseRequestFcn',['delete(2);pause(0.05);robot.keyPress(java.awt.event.KeyEvent.VK_ENTER);']);
             end

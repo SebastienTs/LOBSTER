@@ -6,7 +6,7 @@ function ReportFolder = IRMA(varargin)
     % arg2 -> ReportFolder ('': no report, '.': default results folder, number X -> _rX)
     % arg3 -> Analysis mode: 'Spts', 'Skls', 'Objs', 'Trks' or 'Spst'
     % arg4 -> Dim: 2 or 3 (2D or 3D)
-    % arg5 -> ZRatio: slice spacing to pixel size ratio / {ZRatio, (skeleton tracing pix step / fraction mesh vertices kept), 'MeshExportFolder'} 
+    % arg5 -> ZRatio: slice spacing to pixel size ratio / {ZRatio, (skeleton tracing pix step / fraction mesh vertices kept), 'MeshExportFolder', 'SklExportFormat' (optional)} 
     % arg6 -> Channels folder (intensity measurements only)
     % arg7 -> Channel 1 image filter
     % arg8 -> Channel 2 image filter 
@@ -33,7 +33,7 @@ function ReportFolder = IRMA(varargin)
     %% Skeleton analysis: short branch pruning hard coded settings
     MinBrchLgth = 7;
     MaxIter = 3;
-    SklExport = 'OBJ';
+    SklExport = 'SWC'; % Default format
     
     %% Default configuration for 3D image + channel input: no slice Z step, no offset
     Step = 1;
@@ -116,6 +116,9 @@ function ReportFolder = IRMA(varargin)
                 ExportMeshFolder = ['./Results/Meshes/' fields{end-1} '/'];
             else
                 ExportMeshFolder = varargin{5}{3};
+            end
+            if numel(varargin{5})==4
+                SklExport = varargin{5}{4};
             end
             if ~isempty(ExportMeshFolder)
                 ExportMeshFolder = FixFolderPath(ExportMeshFolder);
@@ -751,19 +754,19 @@ function ReportFolder = IRMA(varargin)
                         XOff = 0;
                         YOff = 0;
                     end
-                    cntnode = uint64(numel(node));
+                    cntnode = int64(numel(node));
                     
                     % Explore links to add intermediary points   
                     node2 = node;   %% New nodes: start with all nodes
                     link2 = [];     %% New links
-                    cntlink = uint64(0);    %% Used to count new links
+                    cntlink = int64(0);    %% Used to count new links
                     for l = 1:numel(link)
                         linkinds = link(l).point;
                         if numel(linkinds) < (2*smp+1)
                             %% Link is short: do not add any node
                             cntlink = cntlink + 1;
-                            link2(cntlink).n1 = uint64(link(l).n1);
-                            link2(cntlink).n2 = uint64(link(l).n2);
+                            link2(cntlink).n1 = int64(link(l).n1);
+                            link2(cntlink).n2 = int64(link(l).n2);
                         else
                             %% Link is long: add intermediary nodes (assuming min. 3 pixels in link)
                             newnodesind = linkinds(1:smp:end);
@@ -781,7 +784,7 @@ function ReportFolder = IRMA(varargin)
                                 currnode = cntnode+j;
                             end
                             link2(cntlink+numel(xpos)+1).n1 = currnode;
-                            link2(cntlink+numel(xpos)+1).n2 = uint64(link(l).n2);
+                            link2(cntlink+numel(xpos)+1).n2 = int64(link(l).n2);
                             cntnode = cntnode + numel(xpos);
                             cntlink = cntlink + numel(xpos)+1;
                         end
@@ -791,10 +794,10 @@ function ReportFolder = IRMA(varargin)
                     switch SklExport
                     case 'OBJ'
                         if BrickMode == 0
-                            cnt = uint64(0);
+                            cnt = int64(0);
                         end
                         if BrickMode == 1 && k == 1
-                            cnt = uint64(0);objdatastore = [];
+                            cnt = int64(0);objdatastore = [];
                         end
                         if ~isempty(node2)
                             if ~isempty(link2)
@@ -846,25 +849,25 @@ function ReportFolder = IRMA(varargin)
 
                     case 'SWC'
 
-                        %% Export to SWC (visualization only, ghost nodes + spurious 1-pixel gaps)
+                        %% Export to SWC (possibly with ghost nodes)
                         if BrickMode == 1 && k == 1
                             cnt = 0;swcdatastore = [];
                         end
                         if ~isempty(node2)
                             if ~isempty(link2)
                                 %% Find all nodes that are not referenced as end links (n2), add them as parents before all existing links
-                                notdefined = setdiff(uint64(1:numel(node2)),uint64([link2.n2])).';
-                                swcdataparentnodes = [uint64(notdefined) uint64(ones(numel(notdefined),1)) uint64([node2(notdefined).comx]).' uint64([node2(notdefined).comy]).' uint64(ZRatio*([node2(notdefined).comz].'-1)+1) uint64(ones(numel(notdefined),1)) -uint64(ones(numel(notdefined),1))];
+                                notdefined = setdiff(int64(1:numel(node2)),int64([link2.n2])).';
+                                swcdataparentnodes = [int64(notdefined) int64(ones(numel(notdefined),1)) int64([node2(notdefined).comx]).' int64([node2(notdefined).comy]).' int64(ZRatio*([node2(notdefined).comz].'-1)+1) int64(ones(numel(notdefined),1)) -int64(ones(numel(notdefined),1))];
                                 %% Re-index n2 links based on their actual position in link list 
-                                sampleindices = [uint64(notdefined) ; uint64([link2.n2]).'];
-                                [~, mappedsampleindices] = ismember(uint64([link2.n1]).',sampleindices);
+                                sampleindices = [int64(notdefined) ; int64([link2.n2]).'];
+                                [~, mappedsampleindices] = ismember(int64([link2.n1]).',sampleindices);
                                 %% Encode all links to SWC format  
                                 if NChans == 0
-                                    swcdata = [uint64([link2.n2]).' uint64(7*ones(numel(link2),1)) uint64([node2([link2.n2]).comx]).' uint64([node2([link2.n2]).comy]).' uint64(ZRatio*([node2([link2.n2]).comz].'-1)+1) uint64(ones(numel(link2),1)) uint64(mappedsampleindices)];
+                                    swcdata = [int64([link2.n2]).' int64(7*ones(numel(link2),1)) int64([node2([link2.n2]).comx]).' int64([node2([link2.n2]).comy]).' int64(ZRatio*([node2([link2.n2]).comz].'-1)+1) int64(ones(numel(link2),1)) int64(mappedsampleindices)];
                                 else
                                     inds = sub2ind(size(Chan),[node2([link2.n2]).comy],[node2([link2.n2]).comx],[node2([link2.n2]).comz]);
-                                    rads = Chan(uint64(inds));
-                                    swcdata = [uint64([link2.n2]).' uint64(7*ones(numel(link2),1)) uint64([node2([link2.n2]).comx]).' uint64([node2([link2.n2]).comy]).' uint64(ZRatio*([node2([link2.n2]).comz].'-1)+1) uint64(rads).' uint64(mappedsampleindices)];
+                                    rads = Chan(int64(inds));
+                                    swcdata = [int64([link2.n2]).' int64(7*ones(numel(link2),1)) int64([node2([link2.n2]).comx]).' int64([node2([link2.n2]).comy]).' int64(ZRatio*([node2([link2.n2]).comz].'-1)+1) int64(rads).' int64(mappedsampleindices)];
                                 end
                                 swcdata = [swcdataparentnodes;swcdata];
                             else
@@ -897,7 +900,7 @@ function ReportFolder = IRMA(varargin)
                             fprintf(fid, swcheader);
                             fclose(fid);
                             %% Renumber links in chronological order
-                            swcdata(:,1) = (1:size(swcdata,1)).';                         
+                            swcdata(:,1) = (1:size(swcdata,1)).';
                             dlmwrite(FilePath,swcdata,'-append','delimiter',' ','precision', 18);
                         end
                     end   
@@ -1065,15 +1068,15 @@ function ReportFolder = IRMA(varargin)
                                     if active(o) == 0
                                         color(o) = 1+mod(o-1,7);
                                         if Dim == 3
-                                            swcdata = [swcdata ; uint64([cntlink color(o) XPos{f}(o) YPos{f}(o) ZRatio*(ZPos{f}(o)-1)+1 1 -1])];
+                                            swcdata = [swcdata ; int64([cntlink color(o) XPos{f}(o) YPos{f}(o) ZRatio*(ZPos{f}(o)-1)+1 1 -1])];
                                         else
-                                            swcdata = [swcdata ; uint64([cntlink color(o) XPos{f}(o) YPos{f}(o) ZRatio*f 1 -1])];
+                                            swcdata = [swcdata ; int64([cntlink color(o) XPos{f}(o) YPos{f}(o) ZRatio*f 1 -1])];
                                         end
                                     else
                                         if Dim == 3
-                                            swcdata = [swcdata ; uint64([cntlink color(o) XPos{f}(o) YPos{f}(o) ZRatio*(ZPos{f}(o)-1)+1 1 active(o)])];
+                                            swcdata = [swcdata ; int64([cntlink color(o) XPos{f}(o) YPos{f}(o) ZRatio*(ZPos{f}(o)-1)+1 1 active(o)])];
                                         else
-                                            swcdata = [swcdata ; uint64([cntlink color(o) XPos{f}(o) YPos{f}(o) ZRatio*f 1 active(o)])];
+                                            swcdata = [swcdata ; int64([cntlink color(o) XPos{f}(o) YPos{f}(o) ZRatio*f 1 active(o)])];
                                         end
                                     end
                                     active(o) = cntlink;
@@ -1085,9 +1088,9 @@ function ReportFolder = IRMA(varargin)
                                         d1 = Div(inds(d),2);
                                         d2 = Div(inds(d),3);
                                         if Dim == 3
-                                            swcdata = [swcdata ; uint64([cntlink color(d1) XPos{f}(d1) YPos{f}(d1) ZRatio*(ZPos{f}(d1)-1)+1 1 active(d2)])];
+                                            swcdata = [swcdata ; int64([cntlink color(d1) XPos{f}(d1) YPos{f}(d1) ZRatio*(ZPos{f}(d1)-1)+1 1 active(d2)])];
                                         else
-                                            swcdata = [swcdata ; uint64([cntlink color(d1) XPos{f}(d1) YPos{f}(d1) ZRatio*f 1 active(d2)])];
+                                            swcdata = [swcdata ; int64([cntlink color(d1) XPos{f}(d1) YPos{f}(d1) ZRatio*f 1 active(d2)])];
                                         end
                                         color(d2) = color(d1);
                                     end
