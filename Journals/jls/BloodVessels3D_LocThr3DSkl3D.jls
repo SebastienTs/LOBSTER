@@ -21,7 +21,6 @@ M = fxg_mLocThr3D(I, params);
 % Skeletonize
 params.PreCloseRad = 0;
 params.Min2DHolesArea = 5;
-params.MinVol = 100;
 params.MinVol = 10;
 O = fxm_kSkl3D(M, params);
 

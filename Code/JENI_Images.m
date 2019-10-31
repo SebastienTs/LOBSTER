@@ -285,8 +285,7 @@ function [InputFolder OutputFolder] = JENI_Images(Journal,ForceInputFolder,Force
                 end
                 
                 %% Automatic key stroke upon windows closing
-                robot = java.awt.Robot;
-                set(handle(i),'CloseRequestFcn',['delete(handle(' num2str(i) '));pause(0.05);robot.keyPress(java.awt.event.KeyEvent.VK_ENTER);']);
+                set(handle(i),'CloseRequestFcn',['delete(handle(' num2str(i) '));pause(0.05);robot = java.awt.Robot;robot.keyPress(java.awt.event.KeyEvent.VK_ENTER);']);
                 
             end
             disp(' ');

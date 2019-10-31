@@ -13,4 +13,6 @@ params.Sigmas = [2 2 2];
 params.MeanBox = [15 15 9];
 params.AddThr = 2;
 params.IgnoreZero = 0;
+params.DoubleThr = 0;
+params.MinVol = 500;
 O = fxg_mLocThr3D(I, params);

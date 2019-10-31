@@ -16,6 +16,8 @@ params.Sigmas = [1 1 1];
 params.MeanBox = [7 7 5];
 params.AddThr = 2;
 params.IgnoreZero = 0;
+params.DoubleThr = 0;
+params.MinVol = 0;
 S = fxg_mLocThr3D(I, params);
 
 params.ZRatio = 2;				% ZRatio of the stack

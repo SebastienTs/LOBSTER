@@ -1,9 +1,6 @@
 % 3D image journal engine (should be called from JENI!!)
 function [InputFolder OutputFolder] = JENI_Stacks(Journal,ForceInputFolder,ForceOutputFolder)
  
-    %% Used to simulate key stroke upon window closing
-    robot = java.awt.Robot;
-
     %% Display information to console
     disp(strcat('Journal: <a href="matlab: opentoline(''',Journal,''',1)">',Journal,'</a>-->','<a href="matlab:JENI(''',Journal,''');">Launch</a>'));
     
@@ -621,10 +618,10 @@ function [InputFolder OutputFolder] = JENI_Stacks(Journal,ForceInputFolder,Force
             
             %% Automatic key stroke upon window closing
             if exist('hdl','var')
-                set(hdl,'CloseRequestFcn',['delete(1);pause(0.05);robot.keyPress(java.awt.event.KeyEvent.VK_ENTER);']);
+                set(hdl,'CloseRequestFcn',['delete(1);pause(0.05);robot = java.awt.Robot;robot.keyPress(java.awt.event.KeyEvent.VK_ENTER);']);
             end
             if exist('hdl2','var')
-                set(hdl,'CloseRequestFcn',['delete(2);pause(0.05);robot.keyPress(java.awt.event.KeyEvent.VK_ENTER);']);
+                set(hdl,'CloseRequestFcn',['delete(2);pause(0.05);robot = java.awt.Robot;robot.keyPress(java.awt.event.KeyEvent.VK_ENTER);']);
             end
             
             %% Wait to continue
