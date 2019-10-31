@@ -625,8 +625,6 @@ function [InputFolder OutputFolder] = JENI_Stacks(Journal,ForceInputFolder,Force
             end
             
             %% Wait to continue
-            disp(' ');
-            disp('Press x to continue');
             if Shw >-1
                 
             if Shw >=0 & Shw <=3

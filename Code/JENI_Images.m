@@ -288,8 +288,6 @@ function [InputFolder OutputFolder] = JENI_Images(Journal,ForceInputFolder,Force
                 set(handle(i),'CloseRequestFcn',['delete(handle(' num2str(i) '));pause(0.05);robot = java.awt.Robot;robot.keyPress(java.awt.event.KeyEvent.VK_ENTER);']);
                 
             end
-            disp(' ');
-            disp('Press x to continue');
             if numel(indshows)>0
                 follow = false;
                 while follow == false
