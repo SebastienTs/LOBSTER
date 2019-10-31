@@ -6,7 +6,7 @@ function ReportFolder = IRMA(varargin)
     % arg2 -> ReportFolder ('': no report, '.': default results folder, number X -> _rX)
     % arg3 -> Analysis mode: 'Spts', 'Skls', 'Objs', 'Trks' or 'Spst'
     % arg4 -> Dim: 2 or 3 (2D or 3D)
-    % arg5 -> ZRatio: slice spacing to pixel size ratio / {ZRatio, (skeleton tracing pix step / fraction mesh vertices kept), 'MeshExportFolder', 'SklExportFormat' (optional)} 
+    % arg5 -> ZRatio: slice spacing to pixel size ratio / {ZRatio, (tracing step / fraction vert. kept / dilation radius), 'MeshExportFolder', 'SklExportFormat' (optional)} 
     % arg6 -> Channels folder (intensity measurements only)
     % arg7 -> Channel 1 image filter
     % arg8 -> Channel 2 image filter 

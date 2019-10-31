@@ -21,7 +21,7 @@ function [InputFolder OutputFolder] = JENI_Images(Journal,ForceInputFolder,Force
     indkeeps = strfind(jstring, '/keep');
     indshows = strfind(jstring, '/show');
 
-    %% Force channel
+    %% Replace string (force channel)
     if nargin == 4
         jstring = strrep(jstring,ForceChan{1},ForceChan{2});
     end
