@@ -9,7 +9,8 @@
 //
 // Usage: 	See documentation.
 //
-// Note:	Requires the macro GetString.ijm to be copied to FIJI "macros" folder.
+// Notes:	- Tested with Fiji Lifeline June 2014
+//		- Requires the macro GetString.ijm to be copied to FIJI "macros" folder.
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Dashboard parameters: can be adjusted
