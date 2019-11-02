@@ -9,7 +9,7 @@ function [D] = fxg_gDeconv3D(A, B, params)
     %
     % Parameters:
     % Type:         Algorithm ('Wiener', 'reg' or 'rl')
-    % wnr3Dnsr:     Noise to Signal ration (Wiener algorithm only)
+    % wnr3Dnsr:     Noise to Signal ratio (Wiener algorithm only)
     % regnoise:     Noise regularization (regularized inverse algorithm only)
     % rlit:         Number of iterations (RL algorithm only)
     % Model_sep:    Force PSF separable model (experimental, set to 0 to disable)

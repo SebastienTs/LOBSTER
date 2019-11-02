@@ -1,7 +1,7 @@
 function [L] = fxm_lTilesMerge(L, A, params)
 
     % Merge/split particles in binary mask to reconstruct loosely convex bright objects.
-    % The algorithm also requires the original image to use intensity information.
+    % The algorithm requires the original image to use intensity information.
     %
     % Sample journal: <a href="matlab:JENI('NucleiCytoo_GradWaterTilesMerge.jl');">NucleiCytoo_GradWaterTilesMerge.jl</a>
     %
@@ -11,8 +11,11 @@ function [L] = fxm_lTilesMerge(L, A, params)
     % Parameters:
     % GaussianRad:      Gaussian blur pre-filter radius (pix)
     % MinObjArea:       Minimum object area (pix)
-    % MinSal:           Minimum tiles saliency (low -0.5 -> 0.5 high)
-    % MaxValleyness:    Maximum tiles valleyness (rescue more 0.75 -> 1.25 rescue less)
+    % MinSal:           Minimum tile saliency (low -0.5 -> 0.5 high)
+    %                   Saliency captures the "intensity flux" inside a tile
+    %                   It is mostly used to discard background and can usually be set around 0 
+    % MaxValleyness:    Maximum tile valleyness (rescue more 0.75 -> 1.25 rescue less)
+    %                   Valleyness is the ratio of tile edge mean int. and inner pix. mean int.
     % ConcavityThresh:  Concavity threshold (sensitive 0.25 -> 0.5 coarse)
 
     if ~isempty(L)

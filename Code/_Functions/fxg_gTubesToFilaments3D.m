@@ -1,8 +1,8 @@
 function [R2] = fxg_gTubesToFilaments3D(I, params)
 
-    % Perform signal casting perpendicular to object surface. Primarily used to
-    % transform tubular objects into filaments but can be used to obtain
-    % response close to concave objects centroid.
+    % Perform intensity casting along local gradient. Primarily used to
+    % transform tubular objects into filaments but can be used to estimate
+    % markers close to concave object centroids.
     % 
     % Sample journal: <a href="matlab:JENI('BloodVessels3D_TubesToFilaments3D.jls');">BloodVessels3D_TubesToFilaments3D.jls</a>
     % 

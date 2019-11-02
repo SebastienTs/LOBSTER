@@ -10,8 +10,8 @@ function [If] = fxg_gDestripe(I, params)
     % Parameters: 
     % Angle:        Average stripe orientation (deg / horizontal)
     % Scale:        Scaling factor prior to processing (<=1, speedup vs details)
-    % TopRad:       Top-hat filter ball radius
-    % OpenRad:      Horizontal line structure element length
+    % TopRad:       Top-hat filter ball radius (adjust to typical bands width)
+    % OpenRad:      Horizontal line structure element length (adjust to typical band gaps)
     % SharpAmount:  Unsharp mask strength (postprocessing, set to 0 to disable)
 
     Angle = params.Angle;

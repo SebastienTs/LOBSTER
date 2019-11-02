@@ -12,7 +12,7 @@ PointSize = 5;
 % Threshold
 params.Sigmas = [2 2 1.5];
 params.MeanBox = [15 15 9];
-params.AddThr = 1;
+params.AddThr = 2;
 params.IgnoreZero = 0;
 params.DoubleThr = 0;
 params.MinVol = 500;
@@ -26,7 +26,7 @@ O = fxm_kSkl3D(M, params);
 
 % Label skeleton
 params.SklLbl = 1;
-params.MinBrchLgth = 11;
+params.MinBrchLgth = 5;
 params.MinBrchLgth2 = 3;
 params.MaxIter = 1;
 params.Ignore4Way = 1;

@@ -1,6 +1,6 @@
 function [If] = fxg_gEnhanceVessels2D(I, params)
 
-    % Calculates vesselness probability map (local tubularity) of a 3D input image
+    % Computes vesselness probability map (local tubularity)
     %
     % Sample journal: <a href="matlab:JENI('EyeFundus_Enhance.jl');">EyeFundus_Enhance.jl</a>
     %
@@ -8,11 +8,12 @@ function [If] = fxg_gEnhanceVessels2D(I, params)
     % Output: 2D grayscale image
     %
     % Parameters:
-    % Scales:   Vector of scales on which the vesselness is computed
-    % Spacings: Input image spacing resolution  
-    % Tau:      Controls response uniformity (between 0.5 and 1), lower tau -> more spread 
+    % Scales:   Scales used to compute vesselness (vector)
+    % Spacings: Input image XY spacing
+    % Tau:      Controls response uniformity (between 0.5 and 1)
+	%			Higher tau -> stronger discrimination 
     % Polarity: Set to 1 for bright vessels
-    % Gamma:    Post-filtering gamma
+    % Gamma:    Post-filtering gamma correction
     
     % Parameters
     Scales = params.Scales;

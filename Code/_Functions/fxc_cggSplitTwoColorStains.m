@@ -1,6 +1,6 @@
 function [Inorm, H, E] = fxc_cggSplitTwoColorStains(I, params)
 
-    % Normalize color image (two stains) to reference H&E color image. 
+    % Normalize a color image (two stains) to reference H&E color image. 
     % The stains can actually have any color vectors, the normalized image will look like H&E. 
     %
     % Sample journal: <a href="matlab:JENI('TwoPureColors_SplitTwoStains.jl');">TwoPureColors_SplitTwoStains.jl</a>

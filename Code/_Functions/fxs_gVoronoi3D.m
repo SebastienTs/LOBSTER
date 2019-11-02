@@ -1,6 +1,6 @@
 function [G] = fxs_gVoronoi3D(M, params)
 
-    % Compute density map from seed mask
+    % Compute density map from seed mask.
     %
     % Sample journal: <a href="matlab:JENI('PointClusters_Voronoi.jl');">PointClusters_Voronoi.jl</a>
     %

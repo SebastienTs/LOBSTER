@@ -13,8 +13,8 @@ params.ExtendedMinThr = 2;
 @fxm_lTilesMerge [L, iA] > [L2];
 params.GaussianRad = 2;
 params.MinObjArea = 175;
-params.MinSal = -0.5;
-params.MaxValleyness = 1.075;
+params.MinSal = 0;
+params.MaxValleyness = 1.1;
 params.ConcavityThresh = 0.4;
 /endf
 

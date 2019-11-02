@@ -9,8 +9,8 @@ function [Im] = fxg_gStackFocuser3D(Im, params)
     %
     % Parameters:
     % WSize:    Analysis window size (pix)
-    % Alpha:    Parameter of the AIF algorithm [Pertuz 2013]
-    % Sth:      Parameter of the AIF algorithm [Pertuz 2013]
+    % Alpha:    Parameter of the AIF algorithm
+    % Sth:      Parameter of the AIF algorithm
 
     WSize = params.WSize;
     Alpha = params.Alpha;

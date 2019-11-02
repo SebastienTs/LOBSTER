@@ -1,6 +1,7 @@
 function [ICm] = fxg_sSBFRegMax(I, params)
 
     % Detect pixels with strong central symmetry (mark seeds).
+    % Find object centroids from thresholded output.
     %
     % Sample journal: <a href="matlab:JENI('NucleiCytoo_SBFRegMax.jl');">NucleiCytoo_SBFRegMax.jl</a>
     %

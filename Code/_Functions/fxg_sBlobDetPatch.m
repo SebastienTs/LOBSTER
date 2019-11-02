@@ -12,7 +12,7 @@ function [VotesCrop] = fxg_mBlobDetPatch(I, params)
     % GaussianVoteRad:  Vote casting length (pix)
     % GradMagThr:       Gradient magnitude threshold for voting (normalized to 1)
     % Rmin:             Minimum object radius (pix)
-    % Rmax:             MAximum object radius (pix)
+    % Rmax:             Maximum object radius (pix)
     % NAngles:          Number of possible vote directions
     % Delta:            Vote angle opening (radian) at each iteration
     % DScale:           Vote radius scaling at each iteration

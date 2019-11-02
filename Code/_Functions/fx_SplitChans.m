@@ -1,6 +1,6 @@
 function [I I2 I3] = fx_SplitChans(I)
 
-    % Enhance anisotropic structures + threshold + skeletonize.
+    % Split the 2 or 3 channels of a 3D stack
     %
     % Sample journal: <a href="matlab:JENI('EyeVesselsSpots_IsoScanFilamRep.jl');">EyeVesselsSpots_IsoScanFilamRep.jl</a>
     %

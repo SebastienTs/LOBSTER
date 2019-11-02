@@ -1,6 +1,6 @@
 function [Votes] = fxg_gRestoreFilam(I, params)
 
-    % Enhance filaments to help closing small gaps. 
+    % Enhance filaments and close small gaps. 
     %
     % Sample journal: <a href="matlab:JENI('CellJunctions_RestoreFilam.jl');">CellJunctions_RestoreFilam.jl</a>
     % 

@@ -9,8 +9,8 @@ function [M] = fxg_mRadStdThr(I, params)
     %
     % Parameters:
     % Grad:         Gaussian blur pre-filter radius (pix)
-    % RSet:         Analysis disks radii (vector, pix)
-    % Fracstd:      Fraction of total variance to include
+    % RSet:         Analysis disk radii (vector, pix)
+    % Fracstd:      Fraction of total variance to consider
     % SegThr:       Object detection sensitivity
     
     % Parameters

@@ -1,6 +1,7 @@
 function [M] = fxg_mGradWaterTiles(A, params)
     
     % Apply watershed algorithm (from regional intensity minima) to gradient magnitude image.
+    % In practice, it will segment uniform objects or split them into particles.
     %
     % Sample journal: <a href="matlab:JENI('NucleiCytoo_GradWaterTilesMerge.jl');">NucleiCytoo_GradWaterTilesMerge.jl</a>
     %
@@ -9,7 +10,7 @@ function [M] = fxg_mGradWaterTiles(A, params)
     %
     % Parameters:
     % GRad:             Gaussian blur pre-filter radius (pix)
-    % ExtendedMinThr:   Intensity regional minima detection noise tolerance
+    % ExtendedMinThr:   Regional minima noise tolerance (lower: more sensitive)
 
     GaussianRadInt = params.GaussianRadInt;
     ExtendedMinThr = params.ExtendedMinThr;

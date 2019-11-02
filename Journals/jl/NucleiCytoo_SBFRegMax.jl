@@ -1,7 +1,7 @@
 InputFolder = './Images/NucleiCytoo/';
 OutputFolder = './Results/Images/NucleiCytoo/';
 Rescale = 1;
-Fill = -1;
+Fill = 1;
 
 @iA = '*C00*.tif';		% Image filter
 
