@@ -5,15 +5,16 @@
 // Date:	30-05-2019
 // Version:	1.0
 //	
-// Description: Montage localized objects identified by LOBSTER (see LOBSTER documentation for details).
+// Description: 	Montage localized objects identified by LOBSTER (see LOBSTER documentation for details).
 //
-// Usage:	Configure path for images and object masks. "Run".
+// Requirements:	Copy Random.lut to IJ luts folder
+//
+// Usage:		Run, select folder with original images, select folder with object label masks.
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-
-ImageFolder = "E:\\LOBSTER\\Images\\HeLaMCF10AMovie\\Movie1";			// Folder with original images
-MaskFolder = "E:\\LOBSTER\\Results\\Images\\HeLaMCF10AMovieOvlLbl\\Movie1";	// Folder with object masks
+ImageFolder = getDirectory("Select original image folder");			// Folder with original images
+MaskFolder = getDirectory("Select label mask folder");				// Folder with object label masks
 ImageFilter = ".tif";								// Original images filter (her all tif images)
 MaskFilter = ".tif";								// Object masks filter (her all tif images)
 Thickness = 3;									// Thickness of object contours (pixels)
