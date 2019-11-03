@@ -1,0 +1,13 @@
+% Data section
+InputFolder = './Results/Images/CytopacqCells/Movie1/';
+OutputFolder = './Results/Images/CytopacqCells_lbl/Movie1/';
+Shw = 1;
+RunProj = 0;
+
+% Pipeline section
+params.SharePenality = 0.5;
+params.AlphaCM = 0.33;
+params.SmallPart = 150;
+params.OvlItExtend = 2;
+params.MaxRescueDistance = 48;
+fxm_lTrackerOvl(InputFolder,OutputFolder,params);
