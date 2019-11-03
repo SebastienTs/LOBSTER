@@ -1,7 +1,7 @@
 InputFolder = './Images/CytopacqCells/Movie1/';
-OutputFolder = './Results/Images/CytopacqCells/Movie1/';
+OutputFolder = './Results/Images/CytopacqCells/Movie1_/';
 
-Fill = 0;
+Fill = 1;
 Lbl = 1;
 
 @iA = '*.tif';
@@ -19,4 +19,10 @@ params.DistStdRad = 5;
 params.MinDistLocVar = 9;
 /endf
 
-/keep M2 > tif;
+@fxm_mFilterObjSizeLbl [M2] > [M3];
+params.MinArea = 150;
+params.MaxArea = Inf;
+/endf
+
+/show iA > M;
+/show iA > M3;
