@@ -7,7 +7,7 @@ SaveOutput = 1;
 ZRatio = 2;
 Shw = 3;
 RunProj = 0;
-PointSize = 5;
+PointSize = 9;
 
 % Threshold
 params.Sigmas = [2 2 1.5];

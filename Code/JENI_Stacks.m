@@ -696,6 +696,7 @@ function [InputFolder OutputFolder] = JENI_Stacks(Journal,ForceInputFolder,Force
                             %% Initialize rendering
                             LoadTaoOpenGl;
                             Form1 = Init_OpenGL_Window('new','render3d_and_mesh',Icrop, FV);
+                            Form1.Text = 'Close window to continue, (m) toggle mask, (c) adjust intensity';
                             Form1.WindowState = System.Windows.Forms.FormWindowState.Normal;
                             Form1.TopMost = true;
                             while Form1.Visible == 1

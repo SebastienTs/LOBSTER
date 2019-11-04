@@ -1,9 +1,19 @@
-% Create an exportation scene for IJ Sceneviewer macro or IJ CellInsight.
+% Create an IJ or CellInsight scene.
 %
-% JOSE(ImageFolder1,ImageFilter1,ImageFolder2,ImageFilter2,...,ReportFolder1,ObjMeasType1,ReportFolder2,ObjMeasType2,Flags,ColorCode);
+% JOSE(ChanFolder1, ChanFlt1, ChanFolder2, ChanFlt2, ... , ReportFolder1, ObjMeasType1, ReportFolder2,ObjMeasType2, ..., Env, Config, ColorCode);
 %
-% Sample calls:
-% See _scene job examples in LOBSTER_ROOT/Jobs
+% ChanFoldern:      Folder of the channel n to display
+% ChanFltn:         Image name string filter of the channel n to display
+% ReportFoldern:    Report folder of the objects n to overlay
+% ObjMeasTypen:     Measurement type of the objects n to overlay ('Spts', 'Skls' or 'Objs')
+% Env:              'IJ' or 'CellInsight'
+% Config:           3 digits flags: cfm
+%                   c: Number of channels of input image (only for 3D images with interleaved channels)
+%                   f: Input 3D images are folders of tif image sequence (0/1)
+%                   m: Input image is a time-lapse (0/1)
+% ColorCode:        '' or string of the type '(getResult("Area",ObjIdx) >= 250)+(getResult("Area",ObjIdx) >= 350)';
+% 
+% See LOBSTER_ROOT/Jobs for sample jobs building scenes
 
 function ExportFolder = JOSE(varargin)
 
