@@ -2,7 +2,7 @@ function [R] = fxg_kIsoScanFilam(I, params)
 
     % Enhance anisotropic structures + threshold + skeletonize.
     %
-    % Sample journal: <a href="matlab:JENI('EyeVesselsSpots_IsoScanFilamRep.jl');">EyeVesselsSpots_IsoScanFilamRep.jl</a>
+    % Sample journal: <a href="matlab:JENI('EyeVesselsSpots_IsoScanFilamClean.jl');">EyeVesselsSpots_IsoScanFilamClean.jl</a>
     %
     % Input: 2D grayscale image
     % Output: 2D skeleton mask

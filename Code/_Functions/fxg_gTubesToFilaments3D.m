@@ -4,7 +4,7 @@ function [R2] = fxg_gTubesToFilaments3D(I, params)
     % transform tubular objects into filaments but can be used to estimate
     % markers close to concave object centroids.
     % 
-    % Sample journal: <a href="matlab:JENI('BloodVessels3D_TubesToFilaments3D.jls');">BloodVessels3D_TubesToFilaments3D.jls</a>
+    % Sample journal: <a href="matlab:JENI('BloodVessels3D_TubesToFilam3D.jls');">BloodVessels3D_TubesToFilam3D.jls</a>
     % 
     % Input: 3D grayscale image
     % Output: 3D grayscale image (8-bit) !! Intensity rescaled to 255 !!

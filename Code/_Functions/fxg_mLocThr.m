@@ -2,7 +2,7 @@ function [It] = fxg_mLocThr(I, params)
 
     % 2D local threshold.
     %
-    % Sample journal:
+    % Sample journal: <a href="matlab:JENI('Cytopacq_Segment.jl');">Cytopacq_Segment.jl</a>
     %
     % Input: 2D grayscale image
     % Output: 2D binary mask

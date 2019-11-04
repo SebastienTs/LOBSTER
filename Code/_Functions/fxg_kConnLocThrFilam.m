@@ -2,7 +2,7 @@ function [M] = fxg_kConnLocThrFilam(I, params)
 
     % Connected local thresholding to segment filaments + thinning.
     %
-    % Sample journal: <a href="matlab:JENI('EyeVesselsSpots_ConnLocThrFilamRep.jl');">EyeVesselsSpots_ConnLocThrFilamRep.jl</a>
+    % Sample journal: <a href="matlab:JENI('EyeVesselsSpots_ConnLocThrFilamClean.jl');">EyeVesselsSpots_ConnLocThrFilamClean.jl</a>
     %
     % Input: 2D grasycale image
     % Output: 2D skeleton mask
