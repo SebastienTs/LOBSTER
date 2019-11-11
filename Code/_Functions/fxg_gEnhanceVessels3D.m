@@ -2,7 +2,7 @@ function [If] = fxg_gEnhanceVessels3D(I, params)
 
     % Calculates vesselness probability map (local tubularity) 
     %
-    % Sample journal: <a href="matlab:JENI('BloodVessels3D_VessLocThr3DSkl3D.jls');">BloodVessels3D_VessLocThr3DSkl3D.jls</a>
+    % Sample journal: <a href="matlab:JENI('BloodVessels3D_Vesselness.jls');">BloodVessels3D_Vesselness.jls</a>
     %
     % Input: 3D grayscale image
     % Output: 3D grayscale image

@@ -2,7 +2,7 @@ function [M] = fxm_mBinWat(I, params)
 
     % Split objects by binary watershed algorithm.
     %
-    % Sample journal:
+    % Sample journal: No journal currently uses this function, prefer fxm_mModBinWat.m 
     %
     % Input: 2D binary mask
     % Output: 2D binary mask

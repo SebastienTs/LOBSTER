@@ -2,7 +2,7 @@ function [L] = fxgs_lSeededPolarGeod(I, M, params)
 
     % Minimize intensity variation along closed contour around seeds.
     %
-    % Sample journal: <a href="matlab:JENI('CrazyCells_ManualSeededPolarGeod.jl');">CrazyCells_ManualSeededPolarGeod.jl</a>
+    % Sample journal: <a href="matlab:JENI('CrazyCells_1ManualSeededPolarGeod.jl');">CrazyCells_1ManualSeededPolarGeod.jl</a>
     %
     % Input: 2D original image, 2D seed mask
     % Output: 2D label mask

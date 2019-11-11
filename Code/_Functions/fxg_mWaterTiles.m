@@ -1,6 +1,7 @@
 function [M] = fxg_mWaterTiles(A, params)
     
-    % Apply watershed algorithm from intensity regional minima.
+    % Detect edges (intensity gradient magnitude) and apply watershed from intensity regional minima 
+    % to segment objects into tiles. 
     %
     % Sample journal: <a href="matlab:JENI('Tissue_SegWaterTiles.jl');">Tissue_SegWaterTiles.jl</a>
     %
@@ -8,8 +9,10 @@ function [M] = fxg_mWaterTiles(A, params)
     % Output: 2D binary mask
     %
     % Parameters:
-    % GRad:             Gaussian blur pre-filter radius (pix)
-    % ExtendedMinThr:   Regional minimal noise tolerance
+    % GRad:             Gaussian blur radius (pix)
+    %                   Higher: increased robustness to noise but resolution loss
+    % ExtendedMinThr:   Regional minimal noise tolerance (gray levels) 
+    %                   Lower: more (weaker edges) tiles detected 
 
     GRad = params.GRad;
     ExtendedMinThr = params.ExtendedMinThr;

@@ -2,7 +2,7 @@ function [M] = fxm_mFilterObjSizeLbl(M, params)
 
     % Only keep objects in given area/volume range. Label objects.
     %
-    % Sample journal: <a href="matlab:JENI('Cytopacq_Segment_lbl.jl');">VesselsSpots_sptdet_sptdet.jl</a>
+    % Sample journal: <a href="matlab:JENI('Cytopacq_SegmentLbl.jl');">Cytopacq_SegmentLbl.jl</a>
     %
     % Input: Binary mask (2D/3D)
     % Output: Label mask (2D/3D)
