@@ -15,10 +15,10 @@ if ~exist('./Journals','dir')
     error('Journals folder does not exist in ROOT_LOBSTER');
 end
 if ~exist('./Images','dir')
-    warning('Images folder does not exist in ROOT_LOBSTER, sample journals will not work');
+    warning(strcat(['Images folder does not exist in ROOT_LOBSTER, sample journals will not work.' char(10) 'Download archive <a href="https://drive.google.com/uc?export=download&id=18A0sm-69TTEl-19DAprqiLHmO-0nBkg4">here</a>' ' and unzip to an empty folder called Images in LOBSTER_ROOT']));
 end
 if ~exist('./Results','dir')
-    warning('Results folder does not exist in ROOT_LOBSTER, sample journals will not work');
+    warning(strcat(['Results folder does not exist in ROOT_LOBSTER, sample journals will not work.' char(10) 'Download archive <a href="https://drive.google.com/uc?export=download&id=1GiJd-JfBvOHJcm_WOB1_gAvMuRAZzOy3">here</a>' ' and unzip to an empty folder called Results in LOBSTER_ROOT']));
 end
 
 %% List content
@@ -52,6 +52,8 @@ cd ..;
 cd(str(1:indxs(end)));
 
 %% Display message
+disp('LOBSTER cheat sheet can be viewed <a href="https://drive.google.com/file/d/1U0YvgWZVeR7e1IyqOBcbvvYzEsseh67K/view?usp=sharing">here</a>');
+disp('LOBSTER documentation can be viewed <a href="https://drive.google.com/file/d/1hn9RIoW2sG8nhYN_fLvrPlskLbM0sao7/view?usp=sharing">here</a>');
 disp('LOBSTER successfully initialized!');
 
 %% Display help
