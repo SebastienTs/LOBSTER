@@ -1,4 +1,3 @@
-% Data section
 InputFolder = './Images/Nuclei3D/';
 OutputFolder = './Results/Images/Nuclei3D2/';
 

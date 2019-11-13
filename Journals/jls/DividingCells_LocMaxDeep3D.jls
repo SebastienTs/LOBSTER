@@ -1,6 +1,6 @@
 InputFolder = './Images/DividingCellsMovie/';
-%FixedInput = './Images/DividingCellsMovie/Annotations/Annotations.tif';
 OutputFolder = './Results/Images/DividingCellsMovie/';
+%FixedInput = './Images/DividingCellsMovie/Annotations/Annotations.tif';
 
 % Display section
 Shw = 3;

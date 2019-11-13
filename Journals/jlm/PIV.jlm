@@ -1,4 +1,3 @@
-% Data section
 InputFolder = './Images/PIV/';
 OutputFolder = './Results/Images/PIV/';
 Shw = 2;

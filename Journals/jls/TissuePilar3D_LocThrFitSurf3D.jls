@@ -1,4 +1,3 @@
-% Data section
 InputFolder = './Images/TissuePilar3D/';
 OutputFolder = './Results/Images/TissuePilar3DSurf/';
 Step = 3;

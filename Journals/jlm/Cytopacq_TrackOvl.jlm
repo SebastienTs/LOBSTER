@@ -1,4 +1,3 @@
-% Data section
 InputFolder = './Results/Images/CytopacqCells/Movie1/';
 OutputFolder = './Results/Images/CytopacqCells_lbl/Movie1/';
 Shw = 1;

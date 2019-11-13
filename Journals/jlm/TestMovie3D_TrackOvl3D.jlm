@@ -1,4 +1,3 @@
-% Data section
 InputFolder = './Images/TestMovie3D/';
 OutputFolder = './Results/Images/TestMovie3DOvlLbl/';
 Shw = -1;

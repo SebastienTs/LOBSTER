@@ -1,7 +1,6 @@
 function [M] = fxg_mWaterTiles(A, params)
     
-    % Detect edges (intensity gradient magnitude) and apply watershed from intensity regional minima 
-    % to segment objects into tiles. 
+    % Gaussian blur image and apply watershed from intensity regional minima to segment objects into tiles. 
     %
     % Sample journal: <a href="matlab:JENI('Tissue_SegWaterTiles.jl');">Tissue_SegWaterTiles.jl</a>
     %

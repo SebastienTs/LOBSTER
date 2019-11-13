@@ -1,4 +1,3 @@
-% Data section
 InputFolder = './Images/EmbryoTissue3D/';
 OutputFolder = './Results/Images/EmbryoTissue3D/';
 

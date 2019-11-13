@@ -1,6 +1,6 @@
 InputFolder = './Images/Plaques3D/Image/';
-%FixedInput = './Images/Plaques3D/Annotations/Annotations.tif';
 OutputFolder = './Results/Images/Plaques3D/';
+%FixedInput = './Images/Plaques3D/Annotations/Annotations.tif';
 
 % Display section
 Shw = 3;

@@ -1,4 +1,3 @@
-% Data section
 InputFolder = './Images/PointClusters3D/';
 OutputFolder = './Results/Images/PointClusters3D/';
 SaveOutput = 1;

@@ -1,4 +1,3 @@
-% Data section
 InputFolder = './Images/FakeTrackMovie/Movie1/';
 OutputFolder = './Results/Images/FakeTrackDstLbl/Movie1/';
 Shw = 1;
