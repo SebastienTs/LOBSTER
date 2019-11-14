@@ -2,8 +2,8 @@
 //
 // Name:	CellInsight
 // Author: 	Sébastien Tosi (IRB/ADMCF)
-// Version:	2.27
-// Date:	25-10-2019	
+// Version:	2.28
+// Date:	14-11-2019	
 //	
 // Description: Annotation tool similar to IJ CellCounter but with extended functionalities.
 //
@@ -600,7 +600,11 @@ while(Stop == false)
 			}
 			if( (y>(getHeight()-GpHeight)) && (x>4*GpHeight) && (x<(getWidth()-3*GpHeight)) ) // Button panel: Import project
 			{
-				if(File.exists(ImgDir+Fname))open(ImgDir+Fname);
+				if(File.exists(ImgDir+Fname))
+				{
+					open(ImgDir+Fname);
+					if(isOpen(Fname))IJ.renameResults(Fname,"Results");
+				}
 				else open();	
 				SelCnt = 0;
 				PointCnt = nResults;

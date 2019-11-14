@@ -33,3 +33,6 @@ imageCalculator("Subtract stack", "Max","Cells");
 selectImage("Cells");
 close();
 run("Merge Channels...", "c1=Max c4=Image create");
+setSlice(nSlices-1);
+resetMinAndMax();
+setSlice(1);

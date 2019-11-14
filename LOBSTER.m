@@ -48,8 +48,10 @@ function LOBSTER
   Journal2Edit = uicontrol('Style','PushButton','String','Edit','Position',[280,260,260,20],'CallBack', @Journals2Edit);
   Journal1Run = uicontrol('Style','PushButton','String','Run Journal 1','Position',[20,240,260,20],'CallBack', @Journals1Run);
   Journal2Run = uicontrol('Style','PushButton','String','Run Journal 2','Position',[280,240,260,20],'CallBack', @Journals2Run);
-  Journal1InOut = uicontrol('Style','PushButton','String','Show In/Out','Position',[20,220,260,20],'CallBack', @Journals1InOutPressed);
-  Journal2InOut = uicontrol('Style','PushButton','String','Show In/Out','Position',[280,220,260,20],'CallBack', @Journals2InOutPressed);
+  Journal1In = uicontrol('Style','PushButton','String','Show In','Position',[20,220,130,20],'CallBack', @Journals1InPressed);
+  Journal2In = uicontrol('Style','PushButton','String','Show In','Position',[280,220,130,20],'CallBack', @Journals2InPressed);
+  Journal1Out = uicontrol('Style','PushButton','String','Show Out','Position',[150,220,130,20],'CallBack', @Journals1OutPressed);
+  Journal2Out = uicontrol('Style','PushButton','String','Show Out','Position',[410,220,130,20],'CallBack', @Journals2OutPressed);
   IRMA1Mask = uicontrol('Style','popupmenu','String',{'O1','O2'},'ToolTipString','Mask folder (objects to measure)','Position',[20,175,40,20]);
   IRMA1Chan = uicontrol('Style','popupmenu','String',{'-','I1','I2','O1','O2'},'ToolTipString','Channel folder (intensity measure)','Position',[20,150,40,20]);
   IRMA1Flt = uicontrol('Style','Edit','String','*.tif','ToolTipString','Channel images filter','Position',[65,150,120,20]);
@@ -71,6 +73,7 @@ function LOBSTER
   S.Dim = Dim;
   S.Export = Export;
   S.ZRatio = ZRatio;
+  S.TL = TL;
   S.MeshDSRatio = MeshDSRatio;
   S.SamplingStep = SamplingStep;
   S.InputFolderPath1 = InputFolderPath1;
@@ -350,10 +353,10 @@ function LOBSTER
       set(ReportFolderPath2, 'String', 'Processing...');
       pause(0.05);
       CallJOSE = 0;
-      if ImDim ==3
-      switch Export.String
+      if ImDim ==3 | strcmp(Mode,'Trks')
+      switch Export.String 
           case 'NoExport'
-          case 'Export'
+          case 'Export'      
               switch Mode
                   case 'Skls'
                     ImZRatio = {ImZRatio,num2str(SamplingStep.String),'.',SklFormat.String};
@@ -402,16 +405,26 @@ function LOBSTER
     end
   end
 
-  function Journals1InOutPressed(h, eventdata)
+  function Journals1InPressed(h, eventdata)
     if ~isempty(InputFolderPath1.String) & ~isempty(OutputFolderPath1.String)
         eval('winopen(InputFolderPath1.String)');
+    end
+  end
+
+  function Journals2InPressed(h, eventdata)
+    if ~isempty(InputFolderPath2.String) & ~isempty(OutputFolderPath2.String)
+        eval('winopen(InputFolderPath2.String)');
+    end
+  end
+
+  function Journals1OutPressed(h, eventdata)
+    if ~isempty(InputFolderPath1.String) & ~isempty(OutputFolderPath1.String)
         eval('winopen(OutputFolderPath1.String)');
     end
   end
 
-  function Journals2InOutPressed(h, eventdata)
+  function Journals2OutPressed(h, eventdata)
     if ~isempty(InputFolderPath2.String) & ~isempty(OutputFolderPath2.String)
-        eval('winopen(InputFolderPath2.String)');
         eval('winopen(OutputFolderPath2.String)');
     end
   end
