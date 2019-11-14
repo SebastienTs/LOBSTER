@@ -15,6 +15,8 @@ function [M] = fxm_mFilterObjSizeLbl(M, params)
     MinArea = params.MinArea;
     MaxArea = params.MaxArea;
     
+    M = uint16(M);
+    
     if (MinArea > 0) || (MaxArea < Inf)
     
         %% Analyze connected particles and compute their areas

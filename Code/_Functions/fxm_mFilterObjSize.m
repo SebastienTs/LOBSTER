@@ -15,12 +15,10 @@ function [M] = fxm_mFilterObjSize(M, params)
     MinArea = params.MinArea;
     MaxArea = params.MaxArea;
     
-    if isfloat(M)
-        M = uint16(M);
-    end
+    M = uint8(M);
     
     if (MinArea > 0) || (MaxArea < Inf)
-    
+     
         %% Analyze connected particles and compute their areas
         M = uint8(255*(M>0));
         CC = bwconncomp(M);

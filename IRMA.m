@@ -1,4 +1,4 @@
-function ReportFolder = IRMA(varargin)
+function [ReportFolder ExportMeshFolder] = IRMA(varargin)
     % Perform journal results masks analysis and measurements.
     %
     % Arguments:
@@ -61,9 +61,9 @@ function ReportFolder = IRMA(varargin)
         error('Mask folder does not exist');
     end
     ReportFolder = varargin{2};
+    fields = strsplit(MaskFolder,{'/','\'});
     if ~isempty(ReportFolder)
         if isnumeric(ReportFolder)
-            fields = strsplit(MaskFolder,{'/','\'});
             if ReportFolder > 0
                 ReportFolder = [MaskFolder '../' fields{end-1} '_r' num2str(ReportFolder) '/' fields{end-1} '/']; 
             else
@@ -72,7 +72,6 @@ function ReportFolder = IRMA(varargin)
             ReportFolder = GetFullPath(ReportFolder);
         end
         if strcmp(ReportFolder,'.')
-            fields = strsplit(MaskFolder,{'/','\'});
             if strcmp(varargin{3},'Trks')
                 ReportFolder = ['./Results/Reports/' fields{end-2} '/' fields{end-1} '/'];
             else
