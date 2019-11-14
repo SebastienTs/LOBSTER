@@ -21,10 +21,10 @@ function LOBSTER
   set(figh,'MenuBar','none','Name','LOBSTER Panel','NumberTitle','off');
   set(figh,'CloseRequestFcn',[]);
   Interface = findobj(figh,'Enable','on');
-  Disp = uicontrol('Style','ToggleButton','String','Batch','Position',[240,360,80,20],'ToolTipString','Show/Hide images processed by journals','CallBack', @DispButtonPressed);
+  Disp = uicontrol('Style','ToggleButton','String','Batch','Position',[195,10,80,20],'ToolTipString','Show/Hide images processed by journals','CallBack', @DispButtonPressed);
   Dim = uicontrol('Style','ToggleButton','String','2D','Position',[20,400,60,20],'ToolTipString','Image dimensionality 2D or 3D','CallBack', @DimButtonPressed);
   TL = uicontrol('Style','ToggleButton','String','-','Position',[20,380,60,20],'ToolTipString','Set to TL if Journal2 is a Time-lapse Journal','CallBack', @TLButtonPressed);
-  SklFormat = uicontrol('Style','ToggleButton','String','SWC','Position',[80,380,60,20],'ToolTipString','Exportation format for filament network','CallBack', @SklFormatButtonPressed);
+  SklFormat = uicontrol('Style','ToggleButton','String','SWC','Position',[260,380,60,20],'ToolTipString','Exportation format for filament network','CallBack', @SklFormatButtonPressed);
   ZRatio = uicontrol('Style','Edit','String','1','Position',[140,400,60,20],'ToolTipString','Image ZRatio (3D only)');
   Export = uicontrol('Style','ToggleButton','String','NoExport','Position',[80,400,60,20],'ToolTipString','Export to 3D models','CallBack', @ExportButtonPressed);
   MeshDSRatio = uicontrol('Style','Edit','String','0.25','Position',[200,400,60,20],'ToolTipString','Fraction of vertices to keep in STL mesh');
@@ -42,8 +42,8 @@ function LOBSTER
   OutputFolderPath2 = uicontrol('Style','Edit','String','','Position',[300,280,240,20]);
   Journal1Select = uicontrol('Style','PushButton','String','Journal1','Position',[20,320,260,20],'CallBack', @Journals1Select);
   Journal2Select = uicontrol('Style','PushButton','String','Journal2','Position',[280,320,260,20],'CallBack', @Journals2Select);
-  Journal1Name = uicontrol('Style','Edit','String','','Position',[20,300,260,20]);
-  Journal2Name = uicontrol('Style','Edit','String','','Position',[280,300,260,20]);
+  Journal1Name = uicontrol('Style','Edit','String','','Position',[20,300,260,20],'Enable','off');
+  Journal2Name = uicontrol('Style','Edit','String','','Position',[280,300,260,20],'Enable','off');
   Journal1Edit = uicontrol('Style','PushButton','String','Edit','Position',[20,260,260,20],'CallBack', @Journals1Edit);
   Journal2Edit = uicontrol('Style','PushButton','String','Edit','Position',[280,260,260,20],'CallBack', @Journals2Edit);
   Journal1Run = uicontrol('Style','PushButton','String','Run Journal 1','Position',[20,240,260,20],'CallBack', @Journals1Run);
@@ -66,7 +66,7 @@ function LOBSTER
   IRMA2Run = uicontrol('Style','PushButton','String','Run Measure 2','Position',[280,100,260,20],'CallBack', @IRMARunPressed2);
   IRMA1Show = uicontrol('Style','PushButton','String','Show some Reports','Position',[20,60,260,20],'CallBack', @IRMAShow1);
   IRMA2Show = uicontrol('Style','PushButton','String','Show some Reports','Position',[280,60,260,20],'CallBack', @IRMAShow2);
-  RunAllButton = uicontrol('Style','PushButton','String','Run All','Position',[240,10,80,20],'ForegroundColor',[1 1 1],'BackgroundColor',[0.25 0.8 0.25],'CallBack', @RunAllPressed);
+  RunAllButton = uicontrol('Style','PushButton','String','Run All','Position',[275,10,80,20],'ForegroundColor',[1 1 1],'BackgroundColor',[0.25 0.8 0.25],'CallBack', @RunAllPressed);
   S.Disp = Disp;
   S.Dim = Dim;
   S.Export = Export;
