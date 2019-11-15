@@ -52,9 +52,8 @@ cd ..;
 cd(str(1:indxs(end)));
 
 %% Display message
-disp('LOBSTER cheat sheet can be viewed <a href="https://drive.google.com/file/d/1U0YvgWZVeR7e1IyqOBcbvvYzEsseh67K/view?usp=sharing">here</a>');
-disp('LOBSTER documentation can be viewed <a href="https://drive.google.com/file/d/1hn9RIoW2sG8nhYN_fLvrPlskLbM0sao7/view?usp=sharing">here</a>');
 disp('LOBSTER successfully initialized!');
 
 %% Display help
-disp('--> Type JENI to run a journal <--');
+disp('To get started, follow <a href="https://sebastients.github.io">LOBSTER Portal and Documentation</a>')
+disp('Type >> LOBSTER to launch the Panel or >> JENI to run a journal');

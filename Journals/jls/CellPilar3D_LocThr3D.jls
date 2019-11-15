@@ -1,9 +1,6 @@
-% Data section
 InputFolder = './Images/CellPilar3D/';
-OutputFolder = './Results/Images/CellPilar3D_brcks/';
+OutputFolder = './Results/Images/CellPilar3D/';
 Shw = 1;
-Brick = 128;
-GuardBand = 64;
 
 % Display section
 PointSize = 5;

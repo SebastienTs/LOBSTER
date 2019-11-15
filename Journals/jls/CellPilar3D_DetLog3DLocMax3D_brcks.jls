@@ -1,4 +1,3 @@
-% Data section
 InputFolder = './Images/CellPilar3D/';
 OutputFolder = './Results/Images/CellPilar3D_brcks/';
 Brick = 128;

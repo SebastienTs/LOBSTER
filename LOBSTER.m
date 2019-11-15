@@ -84,43 +84,57 @@ function LOBSTER
   S.Journal2Name = Journal2Name;
   S.IRMA1Mask = IRMA1Mask;
   S.IRMA1Chan = IRMA1Chan;
+  S.IRMA1Flt = IRMA1Flt;
   S.IRMA1Mode = IRMA1Mode;
   S.ReportFolderPath1 = ReportFolderPath1;
   S.ReportFolderPath2 = ReportFolderPath2;
   S.IRMA2Mask = IRMA2Mask;
   S.IRMA2Chan = IRMA2Chan;
+  S.IRMA2Flt = IRMA2Flt;
   S.IRMA2Mode = IRMA2Mode;
   
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
   function InputFolderPressed1(h, eventdata)
       folder_name = uigetdir('./Images/');
-      set(InputFolderPath1, 'String', folder_name);
+      if folder_name ~= 0
+        set(InputFolderPath1, 'String', folder_name);
+      end
   end
     
   function OutputFolderPressed1(h, eventdata)
       folder_name = uigetdir('./Results/Images/');
-      set(OutputFolderPath1, 'String', folder_name);
+      if folder_name ~= 0
+        set(OutputFolderPath1, 'String', folder_name);
+      end
   end
   
-  function InputFolderPressed2(h, eventdata)
+  function InputFolderPressed2(h, eventdata) 
       folder_name = uigetdir('./Images/');
-      set(InputFolderPath2, 'String', folder_name);
+      if folder_name ~= 0
+        set(InputFolderPath2, 'String', folder_name);
+      end
   end
     
   function OutputFolderPressed2(h, eventdata)
       folder_name = uigetdir('./Results/Images/');
-      set(OutputFolderPath2, 'String', folder_name);
+      if folder_name ~= 0
+        set(OutputFolderPath2, 'String', folder_name);
+      end
   end
 
   function ReportFolderPressed1(h, eventdata)
       folder_name = uigetdir('./Results/Reports/');
-      set(ReportFolderPath1, 'String', folder_name);
+      if folder_name ~= 0
+        set(ReportFolderPath1, 'String', folder_name);
+      end
   end
 
   function ReportFolderPressed2(h, eventdata)
       folder_name = uigetdir('./Results/Reports/');
-      set(ReportFolderPath2, 'String', folder_name);
+      if folder_name ~= 0
+        set(ReportFolderPath2, 'String', folder_name);
+      end
   end
 
   function Journals1Select(h, eventdata)  
@@ -211,6 +225,7 @@ function LOBSTER
 
   function Journals1Run(h, eventdata)  
       if ~isempty(Journal1Name.String)
+          OutputFolder = OutputFolderPath1.String;
           set(h,'ForegroundColor',[1 0 0]);
           set(OutputFolderPath1, 'String', 'Processing...');
           pause(0.05);
@@ -218,14 +233,14 @@ function LOBSTER
           try
             switch Disp.String
               case 'Adjust'
-                eval('[InputFolder OutputFolder] = JENI(Journal1Name.String);');
-              case 'Batch'  
-                eval('[InputFolder OutputFolder] = GENI(Journal1Name.String);');
+                eval('[InputFolder OutputFolder] = JENI(Journal1Name.String,InputFolderPath1.String,OutputFolder);');
+              case 'Batch'
+                eval('[InputFolder OutputFolder] = GENI(Journal1Name.String,InputFolderPath1.String,OutputFolder);');
             end
             set(OutputFolderPath1, 'String', OutputFolder);
             set(h,'ForegroundColor',[0 0 0]);
           catch
-              set(OutputFolderPath1, 'String', '');
+              set(OutputFolderPath1, 'String', 'Error');
               set(h,'ForegroundColor',[0 0 0]);
           end
           set(Interface,'Enable','on');
@@ -234,6 +249,7 @@ function LOBSTER
 
   function Journals2Run(h, eventdata)  
       if ~isempty(Journal2Name.String)
+          OutputFolder = OutputFolderPath2.String;
           set(h,'ForegroundColor',[1 0 0]);
           set(OutputFolderPath2, 'String', 'Processing...');
           pause(0.05);
@@ -241,14 +257,14 @@ function LOBSTER
           try
               switch Disp.String
                   case 'Adjust'
-                    eval('[InputFolder OutputFolder] = JENI(Journal2Name.String);');
+                    eval('[InputFolder OutputFolder] = JENI(Journal2Name.String,InputFolderPath2.String,OutputFolder);');
                   case 'Batch'
-                    eval('[InputFolder OutputFolder] = GENI(Journal2Name.String);');
+                    eval('[InputFolder OutputFolder] = GENI(Journal2Name.String,InputFolderPath2.String,OutputFolder);');
               end
               set(OutputFolderPath2, 'String', OutputFolder);
               set(h,'ForegroundColor',[0 0 0]);
           catch
-              set(OutputFolderPath2, 'String', '');
+              set(OutputFolderPath2, 'String', 'Error');
               set(h,'ForegroundColor',[0 0 0]);
           end
           set(Interface,'Enable','on');
@@ -290,9 +306,9 @@ function LOBSTER
           case 'Export'
               switch Mode
                   case 'Skls'
-                    ImZRatio = {ImZRatio,str2num(SamplingStep.String),'.',SklFormat.String};
+                    ImZRatio = {ImZRatio,str2num(SamplingStep.String),ReportFolder,SklFormat.String};
                   case 'Objs'
-                    ImZRatio = {ImZRatio,str2num(MeshDSRatio.String),'.'};
+                    ImZRatio = {ImZRatio,str2num(MeshDSRatio.String),ReportFolder};
                   case 'Spts'
                     CallJOSE = 1; 
               end
@@ -318,7 +334,7 @@ function LOBSTER
             winopen(GetFullPath(ExportMeshFolder));
           end
       catch
-        set(ReportFolderPath1, 'String', '.');
+        set(ReportFolderPath1, 'String', 'Error');
         set(h,'ForegroundColor',[0 0 0]);
       end  
       end
@@ -359,9 +375,9 @@ function LOBSTER
           case 'Export'      
               switch Mode
                   case 'Skls'
-                    ImZRatio = {ImZRatio,num2str(SamplingStep.String),'.',SklFormat.String};
+                    ImZRatio = {ImZRatio,num2str(SamplingStep.String),ReportFolder,SklFormat.String};
                   case 'Objs'
-                    ImZRatio = {ImZRatio,str2num(MeshDSRatio.String),'.'};
+                    ImZRatio = {ImZRatio,str2num(MeshDSRatio.String),ReportFolder};
                   case 'Spts'
                     CallJOSE = 1;
                   case 'Trks'
@@ -385,7 +401,7 @@ function LOBSTER
             winopen(GetFullPath(ExportMeshFolder));
           end
       catch
-          set(ReportFolderPath2, 'String', '.');
+          set(ReportFolderPath2, 'String', 'Error');
           set(h,'ForegroundColor',[0 0 0]);
       end
       end

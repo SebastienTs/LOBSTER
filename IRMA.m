@@ -212,7 +212,10 @@ function [ReportFolder ExportMeshFolder] = IRMA(varargin)
                 end
                 BrickMode = 1;
                 disp('Brick mode');
-                if ~exist([ReportFolder '/Tmp'],'file') && strcmp(Mode,'Objs') ==1
+                if exist([ReportFolder '/Tmp'],'file')
+                    rmdir([ReportFolder '/Tmp'],'s');
+                end
+                if strcmp(Mode,'Objs') ==1
                     mkdir([ReportFolder '/Tmp']);
                 end
             else
@@ -1226,8 +1229,14 @@ function [ReportFolder ExportMeshFolder] = IRMA(varargin)
         end
     end
     
+    %% Export .csv report
     if ~isempty(Rall)
         writetable(struct2table(Rall), strcat([ReportFolder 'all.csv']),'Delimiter',',');
+    end
+    
+    %% Delete temporary folder
+    if exist([ReportFolder '/Tmp'],'file')
+        rmdir([ReportFolder '/Tmp'],'s');
     end
     
     %% Display hyperlink shortcuts

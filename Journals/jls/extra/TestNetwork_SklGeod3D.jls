@@ -1,4 +1,3 @@
-% Data section
 InputFolder = './Images/TestNetwork/';
 OutputFolder = './Results/Images/TestNetwork3DSklGeod/';
 SaveOutput = 1;
