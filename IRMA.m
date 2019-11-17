@@ -128,6 +128,9 @@ function [ReportFolder ExportMeshFolder] = IRMA(varargin)
             end
         end
     end
+    if ~isempty(ExportMeshFolder) & Dim == 3 & strcmp(Mode,'Trks')
+        error('Exporting 3D models of 3D object tracks is currently not supported!');
+    end
     if nargin > 5
         ChanFolder = varargin{6};
         if iscell(ChanFolder) && numel(ChanFolder)==1

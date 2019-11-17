@@ -17,6 +17,7 @@ function LOBSTER
   global Files;
   global CallJOSE;
   global Interface;
+  global Script;
   figh = figure(10);
   set(figh,'MenuBar','none','Name','LOBSTER Panel','NumberTitle','off');
   set(figh,'CloseRequestFcn',[]);
@@ -234,13 +235,15 @@ function LOBSTER
             switch Disp.String
               case 'Adjust'
                 eval('[InputFolder OutputFolder] = JENI(Journal1Name.String,InputFolderPath1.String,OutputFolder);');
+                Script = strcat([Script char(10) 'JENI(''' Journal1Name.String ''',''' InputFolderPath1.String ''',''' OutputFolder ''');']); 
               case 'Batch'
                 eval('[InputFolder OutputFolder] = GENI(Journal1Name.String,InputFolderPath1.String,OutputFolder);');
+                Script = strcat([Script char(10) 'GENI(''' Journal1Name.String ''',''' InputFolderPath1.String ''',''' OutputFolder ''');']);  
             end
             set(OutputFolderPath1, 'String', OutputFolder);
             set(h,'ForegroundColor',[0 0 0]);
           catch
-              set(OutputFolderPath1, 'String', 'Error');
+              set(OutputFolderPath1, 'String', '?Error?');
               set(h,'ForegroundColor',[0 0 0]);
           end
           set(Interface,'Enable','on');
@@ -258,13 +261,15 @@ function LOBSTER
               switch Disp.String
                   case 'Adjust'
                     eval('[InputFolder OutputFolder] = JENI(Journal2Name.String,InputFolderPath2.String,OutputFolder);');
+                    Script = strcat([Script char(10) 'JENI(''' Journal2Name.String ''',''' InputFolderPath2.String ''',''' OutputFolder ''');']); 
                   case 'Batch'
                     eval('[InputFolder OutputFolder] = GENI(Journal2Name.String,InputFolderPath2.String,OutputFolder);');
+                    Script = strcat([Script char(10) 'GENI(''' Journal2Name.String ''',''' InputFolderPath2.String ''',''' OutputFolder ''');']); 
               end
               set(OutputFolderPath2, 'String', OutputFolder);
               set(h,'ForegroundColor',[0 0 0]);
           catch
-              set(OutputFolderPath2, 'String', 'Error');
+              set(OutputFolderPath2, 'String', '?Error?');
               set(h,'ForegroundColor',[0 0 0]);
           end
           set(Interface,'Enable','on');
@@ -296,6 +301,9 @@ function LOBSTER
       ImDim = Dim.Value+2;
       ImZRatio = str2num(ZRatio.String);
       ReportFolder = ReportFolderPath1.String;
+      if isempty(ReportFolder)
+        ReportFolder = '.';
+      end
       set(h,'ForegroundColor',[1 0 0]);
       set(ReportFolderPath1, 'String', 'Processing...');
       pause(0.05);
@@ -303,19 +311,20 @@ function LOBSTER
       if ImDim ==3
       switch Export.String
           case 'NoExport'
+            Script = strcat([Script char(10) 'IRMA(''' MaskFolder ''',''' ReportFolder ''',''' Mode ''',' num2str(ImDim) ',' num2str(ImZRatio) ');']);
           case 'Export'
               switch Mode
                   case 'Skls'
-                    ImZRatio = {ImZRatio,str2num(SamplingStep.String),ReportFolder,SklFormat.String};
+                    Script = strcat([Script char(10) 'IRMA(''' MaskFolder ''',''' ReportFolder ''',''' Mode ''', ' num2str(ImDim) ',{' num2str(ImZRatio) ',' SamplingStep.String ',''' ReportFolder ''',''' SklFormat.String '''});']);
+                    ImZRatio = {ImZRatio,str2num(SamplingStep.String),ReportFolder, SklFormat.String};
                   case 'Objs'
-                    ImZRatio = {ImZRatio,str2num(MeshDSRatio.String),ReportFolder};
+                    Script = strcat([Script char(10) 'IRMA(''' MaskFolder ''',''' ReportFolder ''',''' Mode ''', ' num2str(ImDim) ',{' num2str(ImZRatio) ',' MeshDSRatio.String ',''' ReportFolder '''});']);
+                    ImZRatio = {ImZRatio,str2num(MeshDSRatio.String),ReportFolder}; 
                   case 'Spts'
-                    CallJOSE = 1; 
+                    CallJOSE = 1;
+                    Script = strcat([Script char(10) 'IRMA(''' MaskFolder ''',''' ReportFolder ''',''' Mode ''',' num2str(ImDim) ',' num2str(ImZRatio) ');']);
               end
       end
-      end
-      if isempty(ReportFolder)
-        ReportFolder = '.';
       end
       try
           if isempty(ChanFolder)
@@ -325,6 +334,7 @@ function LOBSTER
           end
           if CallJOSE == 1
             JOSE(ReportFolder,'Spts',InputFolderPath1.String,'CellInsight','','');
+            Script = strcat([Script char(10) 'JOSE(''' ReportFolder ''',''Spts'',''' InputFolderPath1.String ''',''CellInsight'','''','''');']); 
             ExportMeshFolder = InputFolderPath1.String;
           end
           set(ReportFolderPath1, 'String', ReportFolder);
@@ -334,7 +344,7 @@ function LOBSTER
             winopen(GetFullPath(ExportMeshFolder));
           end
       catch
-        set(ReportFolderPath1, 'String', 'Error');
+        set(ReportFolderPath1, 'String', '?Error?');
         set(h,'ForegroundColor',[0 0 0]);
       end  
       end
@@ -365,6 +375,9 @@ function LOBSTER
       ImDim = Dim.Value+2;
       ImZRatio = str2num(ZRatio.String);
       ReportFolder = ReportFolderPath2.String;
+      if isempty(ReportFolder)
+        ReportFolder = '.';
+      end
       set(h,'ForegroundColor',[1 0 0]);
       set(ReportFolderPath2, 'String', 'Processing...');
       pause(0.05);
@@ -372,27 +385,34 @@ function LOBSTER
       if ImDim ==3 | strcmp(Mode,'Trks')
       switch Export.String 
           case 'NoExport'
+              Script = strcat([Script char(10) 'IRMA(''' MaskFolder ''',''' ReportFolder ''',''' Mode ''',' num2str(ImDim) ',' num2str(ImZRatio) ');']);
           case 'Export'      
               switch Mode
                   case 'Skls'
+                    Script = strcat([Script char(10) 'IRMA(''' MaskFolder ''',''' ReportFolder ''',''' Mode ''', ' num2str(ImDim) ',{' num2str(ImZRatio) ',' SamplingStep.String ',''' ReportFolder ''',''' SklFormat.String '''});']);
                     ImZRatio = {ImZRatio,num2str(SamplingStep.String),ReportFolder,SklFormat.String};
                   case 'Objs'
-                    ImZRatio = {ImZRatio,str2num(MeshDSRatio.String),ReportFolder};
+                      Script = strcat([Script char(10) 'IRMA(''' MaskFolder ''',''' ReportFolder ''',''' Mode ''', ' num2str(ImDim) ',{' num2str(ImZRatio) ',' MeshDSRatio.String ',''' ReportFolder '''});']);
+                      ImZRatio = {ImZRatio,str2num(MeshDSRatio.String),ReportFolder};
                   case 'Spts'
                     CallJOSE = 1;
+                    Script = strcat([Script char(10) 'IRMA(''' MaskFolder ''',''' ReportFolder ''',''' Mode ''',' num2str(ImDim) ',' num2str(ImZRatio) ');']);
                   case 'Trks'
+                    Script = strcat([Script char(10) 'IRMA(''' MaskFolder ''',''' ReportFolder ''',''' Mode ''', ' num2str(ImDim) ',{' num2str(ImZRatio) ','''',''' ReportFolder '''});']);
                     ImZRatio = {ImZRatio,'','.'};
               end
       end
-      end
-      if isempty(ReportFolder)
-        ReportFolder = '.';
       end
       try
           if isempty(ChanFolder)
               eval('[ReportFolder ExportMeshFolder] = IRMA(MaskFolder,ReportFolder,Mode,ImDim,ImZRatio);');
           else
               eval('[ReportFolder ExportMeshFolder] = IRMA(MaskFolder,ReportFolder,Mode,ImDim,ImZRatio,ChanFolder,ChanFlt);');
+          end
+          if CallJOSE == 1
+            JOSE(ReportFolder,'Spts',InputFolderPath2.String,'CellInsight','','');
+            Script = strcat([Script char(10) 'JOSE(''' ReportFolder ''',''Spts'',''' InputFolderPath2.String ''',''CellInsight'','''','''');']); 
+            ExportMeshFolder = InputFolderPath2.String;
           end
           set(ReportFolderPath2, 'String', ReportFolder);
           set(h,'ForegroundColor',[0 0 0]);
@@ -401,7 +421,7 @@ function LOBSTER
             winopen(GetFullPath(ExportMeshFolder));
           end
       catch
-          set(ReportFolderPath2, 'String', 'Error');
+          set(ReportFolderPath2, 'String', '?Error?');
           set(h,'ForegroundColor',[0 0 0]);
       end
       end
@@ -533,6 +553,7 @@ function LOBSTER
   end
 
   function RunAllPressed(h, eventdata)
+    Script = '';
     set(Interface,'Enable','off');
     Journals1Run(h, eventdata);
     while strcmp(get(OutputFolderPath1, 'String'),'Processing...') == 1; 
@@ -551,6 +572,7 @@ function LOBSTER
         pause(0.05);
     end
     set(Interface,'Enable','on');
+    disp(Script);
   end
       
   function ExitPressed(h, eventdata)
