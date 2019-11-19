@@ -2,10 +2,11 @@ clc;
 delete(gcf);
 lobsterver = '1.0';
 
-%% Force path to LOBSTER root on start of JENI / REX
+%% Force path to LOBSTER root on start of JENI (assuming it is already in the paths)
 str = which('init');
 indxs = find((str=='/')|(str=='\'));
-cd(str(1:indxs(end)));
+rootdir = str(1:indxs(end));
+cd(rootdir);
 
 %% Check folders
 if ~exist('./Code','dir')
@@ -43,13 +44,10 @@ end
 addpath(pwd);
 cd 'Code'
 addpath(genpath(pwd));
-cd ..;
+cd(rootdir);
 cd 'Jobs'
 addpath(genpath(pwd));   
-cd ..;
-cd ..;
-cd ..;
-cd(str(1:indxs(end)));
+cd(rootdir);
 
 %% Display message
 disp('LOBSTER successfully initialized!');
