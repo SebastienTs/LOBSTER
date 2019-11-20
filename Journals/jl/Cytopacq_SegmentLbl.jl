@@ -24,5 +24,4 @@ params.MinArea = 150;
 params.MaxArea = Inf;
 /endf
 
-/show iA > M;
 /show iA > M3;
