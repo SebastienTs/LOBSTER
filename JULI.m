@@ -12,6 +12,16 @@
 
 function JULI(MonitoredFolder,ErrorLogFile,sourcemail,password)
 
+    %% Check that imtool3D is in path (init has been performed)
+    if ~exist('imtool3D')
+        error('LOBSTER has not been initialized yet, type >> init');
+    else
+        %% Force path to LOBSTER root on startup
+        str = which('init');
+        indxs = find((str=='/')|(str=='\'));
+        cd(str(1:indxs(end)));
+    end
+
     %% Parse arguments
     if nargin < 2
         error('JULI requires at least 2 arguments');

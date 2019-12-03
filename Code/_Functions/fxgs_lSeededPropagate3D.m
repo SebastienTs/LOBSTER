@@ -29,7 +29,7 @@ function [L] = fxgs_lSeededPropagate3D(I,L,M,params)
             L = imdilate(L,ones(SeedsDilRad,SeedsDilRad,SeedsDilRad));
         end
         
-        %% ptionally analyze CC
+        %% Optionally analyze CC
 		if AnalyzeCC
             L = single(bwlabeln(L,6));
         else
@@ -40,12 +40,12 @@ function [L] = fxgs_lSeededPropagate3D(I,L,M,params)
         if BckSeedLvl > 0
             L(L>0) = L(L>0)+1;
             L = single((I < BckSeedLvl).*(L==0)) + L;
-            M = ones(size(L));
+            M = logical(ones(size(L)));
         end
         
         %% Set mask borders to 0 since no image border check is performed in Propgate_3D
-        %M(1,:,:) = 0;M(end,:,:) = 0;M(:,1,:) = 0;M(:,end,:) = 0;M(:,:,1) = 0;M(:,:,end) = 0;
-        
+        M(1,:,:) = 0;M(end,:,:) = 0;M(:,1,:) = 0;M(:,end,:) = 0;M(:,:,1) = 0;M(:,:,end) = 0;
+   
         %% Propagate
         if Power ~= 1
             L = uint16(Propagate_3D_single(L,(I).^Power,logical(M),single(size(I,3))));

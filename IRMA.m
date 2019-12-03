@@ -24,6 +24,16 @@ function [ReportFolder ExportMeshFolder] = IRMA(varargin)
     % For other type of masks see job examples in LOBSTER_ROOT/Jobs folder
     % For 3D models exportations see _stl and _swc job examples in LOBSTER_ROOT/Jobs folder
     
+    %% Check that imtool3D is in path (init has been performed), if not perform it!
+    if ~exist('imtool3D')
+        error('LOBSTER has not been initialized yet, type >> init');
+    else
+        %% Force path to LOBSTER root on startup
+        str = which('init');
+        indxs = find((str=='/')|(str=='\'));
+        cd(str(1:indxs(end)));
+    end
+    
     %% Hard coded values for skeleton masks and channel names
     SklValue = 200;
     SklEndpts = 220;
@@ -39,17 +49,6 @@ function [ReportFolder ExportMeshFolder] = IRMA(varargin)
     Step = 1;
     Offsets = 0;
     warning on;
-    
-    %% Initialization: paths and folders
-    %% Check that imtool3D is in path (init has been performed), if not perform it!
-    if ~exist('imtool3D')
-        init;
-    else
-        %% Force path to LOBSTER root on startup
-        str = which('init');
-        indxs = find((str=='/')|(str=='\'));
-        cd(str(1:indxs(end)));
-    end
     
     %% Initialization: parse function compulsory arguments
     if nargin<4
@@ -1073,15 +1072,15 @@ function [ReportFolder ExportMeshFolder] = IRMA(varargin)
                                     if active(o) == 0
                                         color(o) = 1+mod(o-1,7);
                                         if Dim == 3
-                                            swcdata = [swcdata ; int64([cntlink color(o) XPos{f}(o) YPos{f}(o) ZRatio*(ZPos{f}(o)-1)+1 1 -1])];
+                                            %% SWC format does not support 3D tracks
                                         else
-                                            swcdata = [swcdata ; int64([cntlink color(o) XPos{f}(o) YPos{f}(o) ZRatio*f 1 -1])];
+                                            swcdata = [swcdata ; int64([cntlink color(o) XPos{f}(o) YPos{f}(o) -ZRatio*f 9 -1])];
                                         end
                                     else
                                         if Dim == 3
-                                            swcdata = [swcdata ; int64([cntlink color(o) XPos{f}(o) YPos{f}(o) ZRatio*(ZPos{f}(o)-1)+1 1 active(o)])];
+                                            %% SWC format does not support 3D tracks
                                         else
-                                            swcdata = [swcdata ; int64([cntlink color(o) XPos{f}(o) YPos{f}(o) ZRatio*f 1 active(o)])];
+                                            swcdata = [swcdata ; int64([cntlink color(o) XPos{f}(o) YPos{f}(o) -ZRatio*f 2 active(o)])];
                                         end
                                     end
                                     active(o) = cntlink;
@@ -1089,15 +1088,16 @@ function [ReportFolder ExportMeshFolder] = IRMA(varargin)
                                 if ~isempty(Div)
                                     inds = find(Div(:,1)==f);
                                     for d = 1:numel(inds)
-                                        cntlink = cntlink + 1;
                                         d1 = Div(inds(d),2);
                                         d2 = Div(inds(d),3);
                                         if Dim == 3
-                                            swcdata = [swcdata ; int64([cntlink color(d1) XPos{f}(d1) YPos{f}(d1) ZRatio*(ZPos{f}(d1)-1)+1 1 active(d2)])];
+                                            %% SWC format does not support 3D tracks
                                         else
-                                            swcdata = [swcdata ; int64([cntlink color(d1) XPos{f}(d1) YPos{f}(d1) ZRatio*f 1 active(d2)])];
+                                            cntlink = cntlink + 1;
+                                            swcdata = [swcdata ; int64([cntlink color(d1) XPos{f}(d1) YPos{f}(d1) -ZRatio*f 2 -1])];
+                                            cntlink = cntlink + 1;
+                                            swcdata = [swcdata ; int64([cntlink color(d1) XPos{f}(d2) YPos{f}(d2) -ZRatio*f 2 cntlink-1])];
                                         end
-                                        color(d2) = color(d1);
                                     end
                                 end
                             end

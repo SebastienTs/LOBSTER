@@ -18,6 +18,16 @@
 
 function [InputFolder OutputFolder] = JENI(Journal,ForceInputFolder,ForceOutputFolder,ForceChan)
  
+    %% Check that imtool3D is in path (init has been performed)
+    if ~exist('imtool3D')
+        error('LOBSTER has not been initialized yet, type >> init');
+    else
+        %% Force path to LOBSTER root on startup
+        str = which('init');
+        indxs = find((str=='/')|(str=='\'));
+        cd(str(1:indxs(end)));
+    end
+
     %% Check number of input arguments
     if nargin == 2 || nargin > 4
         error('Incorrect call to JENI: 0, 1, 3 or 4 input arguments');
@@ -62,16 +72,6 @@ function [InputFolder OutputFolder] = JENI(Journal,ForceInputFolder,ForceOutputF
        if nargin == 0
             error('Journal file must be defined when calling from JULI');
        end
-    end
- 
-    %% Check that imtool3D is in path (init has been performed), if not perform it
-    if ~exist('imtool3D')
-        init;
-    else
-        %% Force path to LOBSTER root on startup
-        str = which('init');
-        indxs = find((str=='/')|(str=='\'));
-        cd(str(1:indxs(end)));
     end
     
     %% Initialization
