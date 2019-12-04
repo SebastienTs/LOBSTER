@@ -1,8 +1,6 @@
-InputFolder = './Images/CellPilar3D/';
-OutputFolder = './Results/Images/CellPilar3DLbl/';
-
-% Display section
-Shw = 3;
+InputFolder = './Images/SimuNuclei3D/';
+OutputFolder = './Results/Images/SimuNuclei3D/';
+Shw = 1;
 NCols = 32;
 ZRatio = 1;
 SaveOutput = 1;
@@ -30,5 +28,5 @@ params.Power = 0.5;
 params.SeedsDilRad = 0;
 params.AnalyzeCC = 1;
 params.MinVol = 350;
-params.BinaryOut = 0;
+params.BinaryOut = 1;
 O = fxgs_lSeededPropagate3D(I,L,M,params);

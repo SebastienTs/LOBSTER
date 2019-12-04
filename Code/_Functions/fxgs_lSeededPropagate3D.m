@@ -5,13 +5,14 @@ function [L] = fxgs_lSeededPropagate3D(I,L,M,params)
     % Sample journal: <a href="matlab:JENI('CellPilar3D_LogLocMaxLocThrPropagate3D.jls');">CellPilar3D_LogLocMaxLocThrPropagate3D.jls</a>
     %
     % Input: 3D original image, 3D binary or label mask, optional 3D binary mask
-    % Output: 3D label mask
+    % Output: 3D label mask or 3D binary mask
     %
     % Parameters:
     % Power:                Apply power law to intensity image prior to processing
     % SeedsDilRad:          Seed pre-dilation radius (merge closeby seeds, pix) 
     % AnalyzeCC:            Set to 0 for input label mask is passed, 1 for binary mask
     % MinVol:               Minimum object volume (voxels)
+    % BinaryOut:            Force output to be binary (touching particles with different labels are split apart)
     
     %% Parameters
     BckSeedLvl = params.BckSeedLvl;
@@ -19,6 +20,7 @@ function [L] = fxgs_lSeededPropagate3D(I,L,M,params)
 	SeedsDilRad = params.SeedsDilRad;
     AnalyzeCC = params.AnalyzeCC;
     MinVol = params.MinVol;
+    BinaryOut = params.BinaryOut;
     
     if ~isempty(I)
     
@@ -62,6 +64,12 @@ function [L] = fxgs_lSeededPropagate3D(I,L,M,params)
         %% Account for background seeds
         if BckSeedLvl > 0
             L = L - 1;
+        end
+        
+        %% Binary output
+        if BinaryOut == 1
+            Ldil = imdilate(L,ones(3,3,3));
+            L = 255*uint8(L>0)-255*uint8((Ldil-L)&(L>0));
         end
         
     else

@@ -1,0 +1,12 @@
+InputFolder = './Results/Images/SimuNuclei3D/';
+OutputFolder = './Results/Images/SimuNuclei3DLbl/';
+Shw = 1;
+RunProj = 0;
+
+% Pipeline section
+params.SharePenality = 0.5;
+params.AlphaCM = 0.33;
+params.SmallPart = 15;
+params.OvlItExtend = 2;
+params.MaxRescueDistance = 48;
+fxm_lTrackerOvl3D(InputFolder,OutputFolder,params);
