@@ -1051,36 +1051,11 @@ end
 end
 
 function scrollWheel(scr,evnt,tool)
-%Check to see if the mouse is over the axis
-% units=get(tool.handles.fig,'Units');
-% set(tool.handles.fig,'Units','Pixels')
-% point=get(tool.handles.fig, 'CurrentPoint');
-% set(tool.handles.fig,'Units',units)
-% 
-% units=get(tool.handles.Panels.Large,'Units');
-% set(tool.handles.Panels.Large,'Units','Pixels')
-% pos_p=get(tool.handles.Panels.Large,'Position');
-% set(tool.handles.Panels.Large,'Units',units)
-% 
-% units=get(tool.handles.Panels.Image,'Units');
-% set(tool.handles.Panels.Image,'Units','Pixels')
-% pos_a=get(tool.handles.Panels.Image,'Position');
-% set(tool.handles.Panels.Image,'Units',units)
-% 
-% xmin=pos_p(1)+pos_a(1); xmax=xmin+pos_a(3);
-% ymin=pos_p(2)+pos_a(2); ymax=ymin+pos_a(4);
-
-
-
-%if point(1)>=xmin && point(1)<=xmax && point(2)>=ymin && point(2)<=ymax
-if isMouseOverAxes(tool.handles.Axes)
     newSlice=get(tool.handles.Slider,'value')-evnt.VerticalScrollCount;
     if newSlice>=1 && newSlice <=size(tool.I,3)
         set(tool.handles.Slider,'value',newSlice);
-        showSlice(tool)
+        showSlice(tool);
     end
-end
-
 end
 
 function multipleScrollWheel(scr,evnt,tools)
