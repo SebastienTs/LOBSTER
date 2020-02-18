@@ -80,6 +80,7 @@ function LOBSTER
   IRMA1Show = uicontrol('Style','PushButton','String','Show some Reports','Position',[20,60,260,20],'CallBack', @IRMAShow1);
   IRMA2Show = uicontrol('Style','PushButton','String','Show some Reports','Position',[280,60,260,20],'CallBack', @IRMAShow2);
   RunAllButton = uicontrol('Style','PushButton','String','Run All','Position',[275,10,80,20],'ForegroundColor',[1 1 1],'BackgroundColor',[0.25 0.8 0.25],'CallBack', @RunAllPressed);
+  Documentation = uicontrol('Style','PushButton','String','HELP','Position',[460,10,80,20],'ToolTipString','Open LOBSTER tutorial','CallBack', @DocumentationPressed);
   S.Disp = Disp;
   S.Dim = Dim;
   S.Export = Export;
@@ -585,6 +586,10 @@ function LOBSTER
     disp(Script);
   end
       
+  function DocumentationPressed(h, eventdata)
+    web('https://sebastients.github.io/user_guide.html');
+  end
+
   function ExitPressed(h, eventdata)
     close all force;
   end

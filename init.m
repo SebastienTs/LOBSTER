@@ -35,7 +35,7 @@ disp(sprintf('Found %i journals',numjl+numjls+numjlm));
 disp(sprintf('Found %i jobs',numjb));
 disp(sprintf('Found %i datasets',numfi));
 if NET.isNETSupported
-    disp('Found compatible .NET version, OPENGL 3D renderer should work!');
+    disp('Found compatible .NET, 3D renderer enabled!');
 else
     disp('No compatible .NET version found, 3D renderer will not work (only supported under Windows)');
 end
@@ -53,5 +53,7 @@ cd(rootdir);
 disp('LOBSTER successfully initialized!');
 
 %% Display help
-disp('To get started, follow <a href="https://sebastients.github.io">LOBSTER Portal and Documentation</a>')
-disp('Type >> LOBSTER to launch the Panel or >> JENI to run a journal');
+disp('To get started, follow <a href="https://sebastients.github.io">LOBSTER Portal and Documentation</a>');
+disp('Type >> LOBSTER to launch LOBSTER Panel (GUI)'); 
+disp('Type >> JENI to run a journal');
+disp('Type >> help + keyword to get help');
