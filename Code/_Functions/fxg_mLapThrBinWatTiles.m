@@ -41,7 +41,9 @@ function [M] = fxg_mLapThrBinWatTiles(A, params)
         end
         
         %% Remove small particle
-        M = bwareaopen(M, MinArea);
+        if MinArea > 0
+            M = bwareaopen(M, MinArea);
+        end
         
         %% Create segmentation mask
         M = uint8(255*M);

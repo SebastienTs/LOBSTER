@@ -10,6 +10,7 @@ Lbl = 1;
 params.Sigmas = [4 4];
 params.MeanBox = [50 50];
 params.AddThr = 2;
+params.MinArea = 0;
 params.IgnoreZero = 0;   
 /endf
 

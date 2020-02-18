@@ -11,14 +11,16 @@ function [It] = fxg_mLocThr(I, params)
     % Sigmas:       Gaussian blur X,Y radii (vector, pix)
     % MeanBox:      X, Y box size to compute local mean (vector, pix)
     % AddThr:       Minimum difference to local mean
+    % MinArea:      Minimum particle area
     % IgnoreZero:   If set to 1 ignore zeros in local mean computation
 
     %% Parameters
     Sigmas = params.Sigmas;
     MeanBox = params.MeanBox;
     AddThr = params.AddThr;
+    MinArea = params.MinArea;
     IgnoreZero = params.IgnoreZero;
-
+    
     if ~isempty(I)
 
             M2 = ones(MeanBox(2),1)/MeanBox(2);
@@ -46,6 +48,11 @@ function [It] = fxg_mLocThr(I, params)
                 If = I;
             end
             It = uint8(255*( (If >= (Im + AddThr)) ));
+            
+            %% Remove small particle
+            if MinArea > 0
+                It = bwareaopen(It, MinArea);
+            end
             
     else
         
