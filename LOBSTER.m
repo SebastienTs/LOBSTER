@@ -28,6 +28,11 @@ function LOBSTER
   global CallJOSE;
   global Interface;
   global Script;
+  global images;
+  global I;
+  global R;
+  global coords;
+  global f;
   figh = figure(10);
   set(figh,'MenuBar','none','Name','LOBSTER Panel','NumberTitle','off');
   set(figh,'CloseRequestFcn',[]);
@@ -40,6 +45,8 @@ function LOBSTER
   Export = uicontrol('Style','ToggleButton','String','NoExport','Position',[80,400,60,20],'ToolTipString','Export to 3D models','CallBack', @ExportButtonPressed);
   MeshDSRatio = uicontrol('Style','Edit','String','0.25','Position',[200,400,60,20],'ToolTipString','Fraction of vertices to keep in STL mesh');
   SamplingStep = uicontrol('Style','Edit','String','4','Position',[260,400,60,20],'ToolTipString','Sampling step (pix) to trace filament network');
+  ChanFolderButton = uicontrol('Style','PushButton','String','C1','Position',[80,380,20,20],'CallBack', @InputFolderPressed1);
+  ChanFolderSet = uicontrol('Style','Edit','String','','Position',[100,380,160,20]);
   SaveButton = uicontrol('Style','PushButton','String','Save','Position',[360,400,60,20],'CallBack', @saveState);
   LoadButton = uicontrol('Style','PushButton','String','Load','Position',[420,400,60,20],'CallBack', @loadState);
   ExitButton = uicontrol('Style','PushButton','String','Exit','Position',[480,400,60,20],'ForegroundColor',[1 1 1],'BackgroundColor',[0.8 0.25 0.25],'CallBack', @ExitPressed);
@@ -64,7 +71,7 @@ function LOBSTER
   Journal1Out = uicontrol('Style','PushButton','String','Show Out','Position',[150,220,130,20],'CallBack', @Journals1OutPressed);
   Journal2Out = uicontrol('Style','PushButton','String','Show Out','Position',[410,220,130,20],'CallBack', @Journals2OutPressed);
   IRMA1Mask = uicontrol('Style','popupmenu','String',{'O1','O2'},'ToolTipString','Mask folder (objects to measure)','Position',[20,175,40,20]);
-  IRMA1Chan = uicontrol('Style','popupmenu','String',{'-','I1','I2','O1','O2'},'ToolTipString','Channel folder (intensity measure)','Position',[20,150,40,20]);
+  IRMA1Chan = uicontrol('Style','popupmenu','String',{'-','I1','I2','O1','O2','C1'},'ToolTipString','Channel folder (intensity measure)','Position',[20,150,40,20]);
   IRMA1Flt = uicontrol('Style','Edit','String','*.tif','ToolTipString','Channel images filter','Position',[65,150,120,20]);
   IRMA1Mode = uicontrol('Style','popupmenu','String',{'-','Objs','Skls','Spts','Trks'},'ToolTipString','Objects type','Position',[20,125,60,20]);
   ReportFolderButton1 = uicontrol('Style','PushButton','String','R1','Position',[20,80,20,20],'CallBack', @ReportFolderPressed1);
@@ -72,7 +79,7 @@ function LOBSTER
   ReportFolderButton2 = uicontrol('Style','PushButton','String','R2','Position',[280,80,20,20],'CallBack', @ReportFolderPressed2);
   ReportFolderPath2 = uicontrol('Style','Edit','String','','String','.','Position',[300,80,240,20]);
   IRMA2Mask = uicontrol('Style','popupmenu','String',{'O2','O1'},'ToolTipString','Mask folder (objects to measure)','Position',[280,175,40,20]);
-  IRMA2Chan = uicontrol('Style','popupmenu','String',{'-','I2','I1','O2','O1'},'ToolTipString','Channel folder (intensity measure)','Position',[280,150,40,20]);
+  IRMA2Chan = uicontrol('Style','popupmenu','String',{'-','I2','I1','O2','O1','C1'},'ToolTipString','Channel folder (intensity measure)','Position',[280,150,40,20]);
   IRMA2Flt = uicontrol('Style','Edit','String','*.tif','ToolTipString','Channel images filter','Position',[325,150,120,20]);
   IRMA2Mode = uicontrol('Style','popupmenu','String',{'-','Objs','Skls','Spts','Trks'},'ToolTipString','Objects type','Position',[280,125,60,20]);
   IRMA1Run = uicontrol('Style','PushButton','String','Run Measure 1','Position',[20,100,260,20],'CallBack', @IRMARunPressed1);
@@ -104,6 +111,7 @@ function LOBSTER
   S.IRMA2Chan = IRMA2Chan;
   S.IRMA2Flt = IRMA2Flt;
   S.IRMA2Mode = IRMA2Mode;
+  S.ChanFolderSet = ChanFolderSet;
   
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     
@@ -251,6 +259,24 @@ function LOBSTER
                 eval('[InputFolder OutputFolder] = GENI(Journal1Name.String,InputFolderPath1.String,OutputFolder);');
                 Script = strcat([Script char(10) 'GENI(''' Journal1Name.String ''',''' InputFolderPath1.String ''',''' OutputFolder ''');']);  
             end
+            if TL.Value == 1 && Dim.Value == 0
+                handle = figure('Name','First time point');
+                images = dir([OutputFolder '*.tif']);
+                I = imread([OutputFolder images(1).name]);
+                imagesc(I);truesize(gcf);
+                coords = ones(1,4);
+                while coords(3)>0 && coords(4)>0
+                    coords = round(getPosition(imrect())); 
+                    BW = roipoly(I,[coords(1) coords(1) coords(1)+coords(3) coords(1)+coords(3)],[coords(2) coords(2)+coords(4) coords(2)+coords(4) coords(2)]);
+                    f = @(x) imdilate(x,strel('disk',1));
+                    I = roifilt2(I,BW,f);
+                    f = @(x) imerode(x,strel('disk',1));
+                    I = roifilt2(I,BW,f);
+                    imagesc(I);
+                end
+                close();
+                imwrite(I,[OutputFolder images(1).name]);
+            end
             set(OutputFolderPath1, 'String', OutputFolder);
             set(h,'ForegroundColor',[0 0 0]);
           catch
@@ -306,7 +332,9 @@ function LOBSTER
         case 4
             ChanFolder = OutputFolderPath1.String;
         case 5
-            ChanFolder = OutputFolderPath2.String; 
+            ChanFolder = OutputFolderPath2.String;
+        case 6
+            ChanFolder = ChanFolderSet.String;
       end
       ChanFlt = IRMA1Flt.String;
       ImDim = Dim.Value+2;
@@ -380,7 +408,9 @@ function LOBSTER
         case 4
             ChanFolder = OutputFolderPath2.String;
         case 5
-            ChanFolder = OutputFolderPath1.String; 
+            ChanFolder = OutputFolderPath1.String;
+        case 6
+            ChanFolder = ChanFolderSet.String;
       end
       ChanFlt = IRMA2Flt.String;
       ImDim = Dim.Value+2;
