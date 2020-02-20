@@ -33,6 +33,7 @@ function LOBSTER
   global R;
   global coords;
   global f;
+  global pre;
   figh = figure(10);
   set(figh,'MenuBar','none','Name','LOBSTER Panel','NumberTitle','off');
   set(figh,'CloseRequestFcn',[]);
@@ -45,8 +46,8 @@ function LOBSTER
   Export = uicontrol('Style','ToggleButton','String','NoExport','Position',[80,400,60,20],'ToolTipString','Export to 3D models','CallBack', @ExportButtonPressed);
   MeshDSRatio = uicontrol('Style','Edit','String','0.25','Position',[200,400,60,20],'ToolTipString','Fraction of vertices to keep in STL mesh');
   SamplingStep = uicontrol('Style','Edit','String','4','Position',[260,400,60,20],'ToolTipString','Sampling step (pix) to trace filament network');
-  ChanFolderButton = uicontrol('Style','PushButton','String','C1','Position',[80,380,20,20],'CallBack', @InputFolderPressed1);
-  ChanFolderSet = uicontrol('Style','Edit','String','','Position',[100,380,160,20]);
+  ChanFolderButton = uicontrol('Style','PushButton','String','C1','Position',[80,380,20,20],'CallBack', @ChannelFolderPressed);
+  ChanFolderSet = uicontrol('Style','Edit','String','','ToolTipString','Placeholder for intensity measurement channel folder','Position',[100,380,160,20]);
   SaveButton = uicontrol('Style','PushButton','String','Save','Position',[360,400,60,20],'CallBack', @saveState);
   LoadButton = uicontrol('Style','PushButton','String','Load','Position',[420,400,60,20],'CallBack', @loadState);
   ExitButton = uicontrol('Style','PushButton','String','Exit','Position',[480,400,60,20],'ForegroundColor',[1 1 1],'BackgroundColor',[0.8 0.25 0.25],'CallBack', @ExitPressed);
@@ -140,6 +141,13 @@ function LOBSTER
       folder_name = uigetdir('./Results/Images/');
       if folder_name ~= 0
         set(OutputFolderPath2, 'String', folder_name);
+      end
+  end
+
+  function ChannelFolderPressed(h, eventdata)
+      folder_name = uigetdir('./Images/');
+      if folder_name ~= 0
+        set(ChanFolderSet, 'String', folder_name);
       end
   end
 
@@ -470,15 +478,25 @@ function LOBSTER
 
   function IRMAShow1(h, eventdata)
     Files = dir(strcat([ReportFolderPath1.String '*.csv']));
+    if(ReportFolderPath1.String(1) == '.')
+        pre = pwd;
+    else
+        pre = '';
+    end
     for i = 1:min(numel(Files),3)
-        open(strcat([pwd '/' ReportFolderPath1.String Files(i).name]));
+        open(strcat([pre ReportFolderPath1.String Files(i).name]));
     end
   end
 
   function IRMAShow2(h, eventdata)
     Files = dir(strcat([ReportFolderPath2.String '*.csv']));
+    if(ReportFolderPath2.String(1) == '.')
+        pre = pwd;
+    else
+        pre = '';
+    end
     for i = 1:min(numel(Files),3)
-        open(strcat([pwd '/' ReportFolderPath2.String Files(i).name]));
+        open(strcat([pre ReportFolderPath2.String Files(i).name]));
     end
   end
 
