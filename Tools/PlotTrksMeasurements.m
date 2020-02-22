@@ -1,6 +1,10 @@
-%% Set path to .csv file from tracking results
-%% Select the indices of the objects to plot (use macro OverlayTrackedObjects and read out indices from object contours)
-%% Run
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% This script plot measurements from a LOBSTER CSV report file for one
+%% or several tracked objects.
+%%
+%% Set path to CSV file from tracking results
+%% Select indices of objects to plot separated by commas
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 [Report path] = uigetfile('.csv','Select .csv file from tracking results');
 answer = inputdlg('Type object indices separated by commas','Objects to plot');

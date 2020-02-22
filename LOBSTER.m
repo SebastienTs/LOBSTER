@@ -89,6 +89,7 @@ function LOBSTER
   IRMA2Show = uicontrol('Style','PushButton','String','Show some Reports','Position',[280,60,260,20],'CallBack', @IRMAShow2);
   RunAllButton = uicontrol('Style','PushButton','String','Run All','Position',[275,10,80,20],'ForegroundColor',[1 1 1],'BackgroundColor',[0.25 0.8 0.25],'CallBack', @RunAllPressed);
   Documentation = uicontrol('Style','PushButton','String','HELP','Position',[460,10,80,20],'ToolTipString','Open LOBSTER tutorial','CallBack', @DocumentationPressed);
+  State = uicontrol('Style','Edit','String','','ForegroundColor',[1 0 0],'Position',[20,10,120,20]);
   S.Disp = Disp;
   S.Dim = Dim;
   S.Export = Export;
@@ -255,7 +256,7 @@ function LOBSTER
       if ~isempty(Journal1Name.String)
           OutputFolder = OutputFolderPath1.String;
           set(h,'ForegroundColor',[1 0 0]);
-          set(OutputFolderPath1, 'String', 'Processing...');
+          set(State, 'String', 'Processing Journal1...');
           pause(0.05);
           set(Interface,'Enable','off');
           try
@@ -285,11 +286,10 @@ function LOBSTER
                 close();
                 imwrite(I,[OutputFolder images(1).name]);
             end
-            set(OutputFolderPath1, 'String', OutputFolder);
             set(h,'ForegroundColor',[0 0 0]);
+            set(State, 'String', '');
           catch
-              set(OutputFolderPath1, 'String', '?Error?');
-              set(h,'ForegroundColor',[0 0 0]);
+              set(State, 'String', 'Error');
           end
           set(Interface,'Enable','on');
       end
@@ -299,7 +299,7 @@ function LOBSTER
       if ~isempty(Journal2Name.String)
           OutputFolder = OutputFolderPath2.String;
           set(h,'ForegroundColor',[1 0 0]);
-          set(OutputFolderPath2, 'String', 'Processing...');
+          set(State, 'String', 'Processing Journal2...');
           pause(0.05);
           set(Interface,'Enable','off');
           try
@@ -311,11 +311,10 @@ function LOBSTER
                     eval('[InputFolder OutputFolder] = GENI(Journal2Name.String,InputFolderPath2.String,OutputFolder);');
                     Script = strcat([Script char(10) 'GENI(''' Journal2Name.String ''',''' InputFolderPath2.String ''',''' OutputFolder ''');']); 
               end
-              set(OutputFolderPath2, 'String', OutputFolder);
               set(h,'ForegroundColor',[0 0 0]);
+              set(State, 'String', '');
           catch
-              set(OutputFolderPath2, 'String', '?Error?');
-              set(h,'ForegroundColor',[0 0 0]);
+              set(State, 'String', 'Error');
           end
           set(Interface,'Enable','on');
       end
@@ -352,7 +351,7 @@ function LOBSTER
         ReportFolder = '.';
       end
       set(h,'ForegroundColor',[1 0 0]);
-      set(ReportFolderPath1, 'String', 'Processing...');
+      set(State, 'String', 'Measuring 1...');
       pause(0.05);
       CallJOSE = 0;
       if ImDim ==3
@@ -384,15 +383,14 @@ function LOBSTER
             Script = strcat([Script char(10) 'JOSE(''' ReportFolder ''',''Spts'',''' InputFolderPath1.String ''',''CellInsight'','''','''');']); 
             ExportMeshFolder = InputFolderPath1.String;
           end
-          set(ReportFolderPath1, 'String', ReportFolder);
+          set(State, 'String', '');
           set(h,'ForegroundColor',[0 0 0]);
           winopen(GetFullPath(ReportFolder));
           if ~isempty(ExportMeshFolder)
             winopen(GetFullPath(ExportMeshFolder));
           end
       catch
-        set(ReportFolderPath1, 'String', '?Error?');
-        set(h,'ForegroundColor',[0 0 0]);
+        set(State, 'String', 'Error');
       end  
       end
   end
@@ -428,7 +426,7 @@ function LOBSTER
         ReportFolder = '.';
       end
       set(h,'ForegroundColor',[1 0 0]);
-      set(ReportFolderPath2, 'String', 'Processing...');
+      set(State, 'String', 'Measuring 2...');
       pause(0.05);
       CallJOSE = 0;
       if ImDim ==3 | strcmp(Mode,'Trks')
@@ -463,15 +461,14 @@ function LOBSTER
             Script = strcat([Script char(10) 'JOSE(''' ReportFolder ''',''Spts'',''' InputFolderPath2.String ''',''CellInsight'','''','''');']); 
             ExportMeshFolder = InputFolderPath2.String;
           end
-          set(ReportFolderPath2, 'String', ReportFolder);
+          set(State, 'String', '');
           set(h,'ForegroundColor',[0 0 0]);
           winopen(GetFullPath(ReportFolder));
           if ~isempty(ExportMeshFolder)
             winopen(GetFullPath(ExportMeshFolder));
           end
       catch
-          set(ReportFolderPath2, 'String', '?Error?');
-          set(h,'ForegroundColor',[0 0 0]);
+          set(State, 'String', 'Error');
       end
       end
   end
@@ -615,19 +612,19 @@ function LOBSTER
     Script = '';
     set(Interface,'Enable','off');
     Journals1Run(h, eventdata);
-    while strcmp(get(OutputFolderPath1, 'String'),'Processing...') == 1; 
+    while strcmp(get(State, 'String'),'Processing Journal1...') == 1; 
         pause(0.05);
     end
     Journals2Run(h, eventdata);
-    while strcmp(get(OutputFolderPath2, 'String'),'Processing...') == 1; 
+    while strcmp(get(State, 'String'),'Processing Journal2...') == 1; 
         pause(0.05);
     end
     IRMARunPressed1(h, eventdata);
-    while strcmp(get(ReportFolderPath1, 'String'),'Processing...') == 1; 
+    while strcmp(get(State, 'String'),'Measuring1...') == 1;
         pause(0.05);
     end
     IRMARunPressed2(h, eventdata);
-    while strcmp(get(ReportFolderPath2, 'String'),'Processing...') == 1; 
+    while strcmp(get(State, 'String'),'Measuring2...') == 1;
         pause(0.05);
     end
     set(Interface,'Enable','on');
