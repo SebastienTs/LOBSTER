@@ -46,7 +46,10 @@ cd 'Code'
 addpath(genpath(pwd));
 cd(rootdir);
 cd 'Jobs'
-addpath(genpath(pwd));   
+addpath(genpath(pwd));
+cd(rootdir);
+cd 'Tools'
+addpath(genpath(pwd));  
 cd(rootdir);
 
 %% Display message

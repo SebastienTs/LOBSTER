@@ -1,0 +1,11 @@
+InputFolder = '.\Results\Images\Mastodon3D\Movie1\';
+OutputFolder = '.\Results\Images\Mastodon3DOvlLbl\Movie1\';
+Shw = -1;
+
+% Pipeline section
+params.SharePenality = 0.33;
+params.AlphaCM = 0.33;
+params.SmallPart = 0;
+params.OvlItExtend = 0;
+params.MaxRescueDistance = 48;
+fxm_lTrackerOvl3D(InputFolder,OutputFolder,params);

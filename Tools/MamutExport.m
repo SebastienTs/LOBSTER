@@ -14,9 +14,9 @@ close all;
 clc;
 
 %% File/folder selection
-[ImageXML,pathXML] = uigetfile('*.xml','Select BigDataViewer XML file');
-TrackFolder = uigetdir('','Select LOBSTER tracking output folder');
-RepFolder = uigetdir('','Select LOBSTER reports folder');
+[ImageXML,pathXML] = uigetfile('Images/*.xml','Select BigDataViewer XML file');
+TrackFolder = uigetdir('Results/Images/','Select LOBSTER tracking output folder');
+RepFolder = uigetdir('Results/Reports/','Select LOBSTER reports folder');
 ExportFileName = [pathXML '/' ImageXML(1:end-4) '_mamut.xml'];
 
 %% Set spot size
@@ -61,7 +61,7 @@ BaseName = FileName(1:idx-1);
 warning('OFF', 'MATLAB:table:ModifiedVarnames');
 warning('OFF', 'MATLAB:table:ModifiedAndSavedVarnames');
 if exist([TrackFolder '\zzz_DivLog.csv'],'file')
-    D = table2array(readtable([RepFolder '\zzz_DivLog.csv']));
+    D = table2array(readtable([TrackFolder '\zzz_DivLog.csv']));
 else
     D = [0 0 0];
 end
@@ -72,7 +72,7 @@ NTracks = size(X,2);
 if Dim == 3
     Z = table2array(readtable([RepFolder '\' BaseName '_CMz.csv']));
 else
-    Z = ones(size(X));
+    Z = zeros(size(X));
 end
 
 %% Identify spots (objects with nonzero area) + retrieve associated track ID / time points

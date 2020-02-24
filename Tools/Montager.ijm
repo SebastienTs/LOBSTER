@@ -38,7 +38,12 @@ for(i=0;i<channels;i++)
 	getMinAndMax(DispMin[i], DispMax[i]);
 }
 run("Colors...", "foreground=white background=black selection=yellow");
-if(!isOpen("Results"))exit("Load some results!");
+if(!isOpen("Results"))
+{
+	ImageName =  getTitle();
+	IJ.renameResults(substring(ImageName,0,lengthOf(ImageName)-4)+".csv","Results");
+	if(!isOpen("Results"))exit("Load some results!");
+}
 if(EndAt==-1)EndAt = nResults;
 
 // Build montage

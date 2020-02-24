@@ -13,11 +13,11 @@
 //
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-ImageFolder = getDirectory("Select original image folder");			// Folder with original images
-MaskFolder = getDirectory("Select label mask folder");				// Folder with object label masks
-ImageFilter = ".tif";								// Original images filter (her all tif images)
-MaskFilter = ".tif";								// Object masks filter (her all tif images)
-Thickness = 3;									// Thickness of object contours (pixels)
+ImageFolder = getDirectory("Select input image folder");					// Folder with original images
+MaskFolder = getDirectory("Select output label mask folder");				// Folder with object label masks
+ImageFilter = ".tif";														// Original images filter
+MaskFilter = ".tif";														// Object masks filter
+Thickness = 3;																// Thickness of object contours (pixels)
 
 run("Image Sequence...", "open="+ImageFolder+" file="+ImageFilter+" sort");
 run("Grays");

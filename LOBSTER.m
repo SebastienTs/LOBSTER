@@ -38,43 +38,42 @@ function LOBSTER
   set(figh,'MenuBar','none','Name','LOBSTER Panel','NumberTitle','off');
   set(figh,'CloseRequestFcn',[]);
   Interface = findobj(figh,'Enable','on');
-  Disp = uicontrol('Style','ToggleButton','String','Batch','Position',[195,10,80,20],'ToolTipString','Show/Hide images processed by journals','CallBack', @DispButtonPressed);
-  Dim = uicontrol('Style','ToggleButton','String','2D','Position',[20,400,60,20],'ToolTipString','Image dimensionality 2D or 3D','CallBack', @DimButtonPressed);
-  TL = uicontrol('Style','ToggleButton','String','-','Position',[20,380,60,20],'ToolTipString','Set to TL if Journal2 is a Time-lapse Journal','CallBack', @TLButtonPressed);
+  Dim = uicontrol('Style','ToggleButton','String','2D','Position',[20,400,60,20],'ToolTipString','2D/3D Image','CallBack', @DimButtonPressed);
+  TL = uicontrol('Style','ToggleButton','String','-','Position',[20,380,60,20],'ToolTipString','Set to TL if Journal 2 is time-lapse','CallBack', @TLButtonPressed);
   SklFormat = uicontrol('Style','ToggleButton','String','SWC','Position',[260,380,60,20],'ToolTipString','Exportation format for filament network','CallBack', @SklFormatButtonPressed);
   ZRatio = uicontrol('Style','Edit','String','1','Position',[140,400,60,20],'ToolTipString','Image ZRatio (3D only)');
-  Export = uicontrol('Style','ToggleButton','String','NoExport','Position',[80,400,60,20],'ToolTipString','Export to 3D models','CallBack', @ExportButtonPressed);
-  MeshDSRatio = uicontrol('Style','Edit','String','0.25','Position',[200,400,60,20],'ToolTipString','Fraction of vertices to keep in STL mesh');
-  SamplingStep = uicontrol('Style','Edit','String','4','Position',[260,400,60,20],'ToolTipString','Sampling step (pix) to trace filament network');
-  ChanFolderButton = uicontrol('Style','PushButton','String','C1','Position',[80,380,20,20],'CallBack', @ChannelFolderPressed);
+  Export = uicontrol('Style','ToggleButton','String','NoExport','Position',[80,400,60,20],'ToolTipString','Export to 3D model','CallBack', @ExportButtonPressed);
+  MeshDSRatio = uicontrol('Style','Edit','String','0.25','Position',[200,400,60,20],'ToolTipString','STL mesh vertex keep fraction (0 - 1, Export only)');
+  SamplingStep = uicontrol('Style','Edit','String','4','Position',[260,400,60,20],'ToolTipString','SWC/OBJ filament network sampling step (pix, Export only)');
+  ChanFolderButton = uicontrol('Style','PushButton','String','C1','Position',[80,380,20,20],'ToolTipString','Possible source folder for intensity channel','CallBack', @ChannelFolderPressed);
   ChanFolderSet = uicontrol('Style','Edit','String','','ToolTipString','Placeholder for intensity measurement channel folder','Position',[100,380,160,20]);
-  SaveButton = uicontrol('Style','PushButton','String','Save','Position',[360,400,60,20],'CallBack', @saveState);
-  LoadButton = uicontrol('Style','PushButton','String','Load','Position',[420,400,60,20],'CallBack', @loadState);
+  SaveButton = uicontrol('Style','PushButton','String','Save','Position',[360,400,60,20],'ToolTipString','Save project','CallBack', @saveState);
+  LoadButton = uicontrol('Style','PushButton','String','Load','Position',[420,400,60,20],'ToolTipString','Load project','CallBack', @loadState);
   ExitButton = uicontrol('Style','PushButton','String','Exit','Position',[480,400,60,20],'ForegroundColor',[1 1 1],'BackgroundColor',[0.8 0.25 0.25],'CallBack', @ExitPressed);
-  InputFolderButton1 = uicontrol('Style','PushButton','String','I1','Position',[20,340,20,20],'CallBack', @InputFolderPressed1);
-  InputFolderPath1 = uicontrol('Style','Edit','String','','Position',[40,340,240,20]);
-  OutputFolderButton1 = uicontrol('Style','PushButton','String','O1','Position',[20,280,20,20],'CallBack', @OutputFolderPressed1);
-  OutputFolderPath1 = uicontrol('Style','Edit','String','','Position',[40,280,240,20]);
-  InputFolderButton2 = uicontrol('Style','PushButton','String','I2','Position',[280,340,20,20],'CallBack', @InputFolderPressed2);
-  InputFolderPath2 = uicontrol('Style','Edit','String','','Position',[300,340,240,20]);
-  OutputFolderButton2 = uicontrol('Style','PushButton','String','O2','Position',[280,280,20,20],'CallBack', @OutputFolderPressed2);
-  OutputFolderPath2 = uicontrol('Style','Edit','String','','Position',[300,280,240,20]);
-  Journal1Select = uicontrol('Style','PushButton','String','Journal1','Position',[20,320,260,20],'CallBack', @Journals1Select);
-  Journal2Select = uicontrol('Style','PushButton','String','Journal2','Position',[280,320,260,20],'CallBack', @Journals2Select);
+  InputFolderButton1 = uicontrol('Style','PushButton','String','I1','Position',[20,340,20,20],'ToolTipString','Set image input folder from file browser','CallBack', @InputFolderPressed1);
+  InputFolderPath1 = uicontrol('Style','Edit','String','','ToolTipString','Image input folder','Position',[40,340,240,20]);
+  OutputFolderButton1 = uicontrol('Style','PushButton','String','O1','ToolTipString','Set image output folder from file browser','Position',[20,280,20,20],'CallBack', @OutputFolderPressed1);
+  OutputFolderPath1 = uicontrol('Style','Edit','String','','ToolTipString','Image output folder','Position',[40,280,240,20]);
+  InputFolderButton2 = uicontrol('Style','PushButton','String','I2','ToolTipString','Set image input folder from file browser','Position',[280,340,20,20],'CallBack', @InputFolderPressed2);
+  InputFolderPath2 = uicontrol('Style','Edit','String','','ToolTipString','Image input folder','Position',[300,340,240,20]);
+  OutputFolderButton2 = uicontrol('Style','PushButton','String','O2','ToolTipString','Set image output folder from file browser','Position',[280,280,20,20],'CallBack', @OutputFolderPressed2);
+  OutputFolderPath2 = uicontrol('Style','Edit','String','','ToolTipString','Image output folder','Position',[300,280,240,20]);
+  Journal1Select = uicontrol('Style','PushButton','String','Journal1','ToolTipString','Select Journal 1','Position',[20,320,260,20],'CallBack', @Journals1Select);
+  Journal2Select = uicontrol('Style','PushButton','String','Journal2','ToolTipString','Select Journal 2','Position',[280,320,260,20],'CallBack', @Journals2Select);
   Journal1Name = uicontrol('Style','Edit','String','','Position',[20,300,260,20],'Enable','off');
   Journal2Name = uicontrol('Style','Edit','String','','Position',[280,300,260,20],'Enable','off');
-  Journal1Edit = uicontrol('Style','PushButton','String','Edit','Position',[20,260,260,20],'CallBack', @Journals1Edit);
-  Journal2Edit = uicontrol('Style','PushButton','String','Edit','Position',[280,260,260,20],'CallBack', @Journals2Edit);
+  Journal1Edit = uicontrol('Style','PushButton','String','Edit','ToolTipString','Edit Journal 1','Position',[20,260,260,20],'CallBack', @Journals1Edit);
+  Journal2Edit = uicontrol('Style','PushButton','String','Edit','ToolTipString','Edit Journal 2','Position',[280,260,260,20],'CallBack', @Journals2Edit);
   Journal1Run = uicontrol('Style','PushButton','String','Run Journal 1','Position',[20,240,260,20],'CallBack', @Journals1Run);
   Journal2Run = uicontrol('Style','PushButton','String','Run Journal 2','Position',[280,240,260,20],'CallBack', @Journals2Run);
-  Journal1In = uicontrol('Style','PushButton','String','Show In','Position',[20,220,130,20],'CallBack', @Journals1InPressed);
-  Journal2In = uicontrol('Style','PushButton','String','Show In','Position',[280,220,130,20],'CallBack', @Journals2InPressed);
-  Journal1Out = uicontrol('Style','PushButton','String','Show Out','Position',[150,220,130,20],'CallBack', @Journals1OutPressed);
-  Journal2Out = uicontrol('Style','PushButton','String','Show Out','Position',[410,220,130,20],'CallBack', @Journals2OutPressed);
+  Journal1In = uicontrol('Style','PushButton','String','Show In','ToolTipString','Show Journal 1 input folder','Position',[20,220,130,20],'CallBack', @Journals1InPressed);
+  Journal2In = uicontrol('Style','PushButton','String','Show In','ToolTipString','Show Journal 2 input folder','Position',[280,220,130,20],'CallBack', @Journals2InPressed);
+  Journal1Out = uicontrol('Style','PushButton','String','Show Out','ToolTipString','Show Journal 1 output folder','Position',[150,220,130,20],'CallBack', @Journals1OutPressed);
+  Journal2Out = uicontrol('Style','PushButton','String','Show Out','ToolTipString','Show Journal 1 output folder','Position',[410,220,130,20],'CallBack', @Journals2OutPressed);
   IRMA1Mask = uicontrol('Style','popupmenu','String',{'O1','O2'},'ToolTipString','Mask folder (objects to measure)','Position',[20,175,40,20]);
   IRMA1Chan = uicontrol('Style','popupmenu','String',{'-','I1','I2','O1','O2','C1'},'ToolTipString','Channel folder (intensity measure)','Position',[20,150,40,20]);
   IRMA1Flt = uicontrol('Style','Edit','String','*.tif','ToolTipString','Channel images filter','Position',[65,150,120,20]);
-  IRMA1Mode = uicontrol('Style','popupmenu','String',{'-','Objs','Skls','Spts','Trks'},'ToolTipString','Objects type','Position',[20,125,60,20]);
+  IRMA1Mode = uicontrol('Style','popupmenu','String',{'-','Objs','Skls','Spts','Trks'},'ToolTipString','Measurements type','Position',[20,125,60,20]);
   ReportFolderButton1 = uicontrol('Style','PushButton','String','R1','Position',[20,80,20,20],'CallBack', @ReportFolderPressed1);
   ReportFolderPath1 = uicontrol('Style','Edit','String','','String','.','Position',[40,80,240,20]);
   ReportFolderButton2 = uicontrol('Style','PushButton','String','R2','Position',[280,80,20,20],'CallBack', @ReportFolderPressed2);
@@ -82,14 +81,16 @@ function LOBSTER
   IRMA2Mask = uicontrol('Style','popupmenu','String',{'O2','O1'},'ToolTipString','Mask folder (objects to measure)','Position',[280,175,40,20]);
   IRMA2Chan = uicontrol('Style','popupmenu','String',{'-','I2','I1','O2','O1','C1'},'ToolTipString','Channel folder (intensity measure)','Position',[280,150,40,20]);
   IRMA2Flt = uicontrol('Style','Edit','String','*.tif','ToolTipString','Channel images filter','Position',[325,150,120,20]);
-  IRMA2Mode = uicontrol('Style','popupmenu','String',{'-','Objs','Skls','Spts','Trks'},'ToolTipString','Objects type','Position',[280,125,60,20]);
+  IRMA2Mode = uicontrol('Style','popupmenu','String',{'-','Objs','Skls','Spts','Trks'},'ToolTipString','Measurement type','Position',[280,125,60,20]);
   IRMA1Run = uicontrol('Style','PushButton','String','Run Measure 1','Position',[20,100,260,20],'CallBack', @IRMARunPressed1);
   IRMA2Run = uicontrol('Style','PushButton','String','Run Measure 2','Position',[280,100,260,20],'CallBack', @IRMARunPressed2);
-  IRMA1Show = uicontrol('Style','PushButton','String','Show some Reports','Position',[20,60,260,20],'CallBack', @IRMAShow1);
-  IRMA2Show = uicontrol('Style','PushButton','String','Show some Reports','Position',[280,60,260,20],'CallBack', @IRMAShow2);
-  RunAllButton = uicontrol('Style','PushButton','String','Run All','Position',[275,10,80,20],'ForegroundColor',[1 1 1],'BackgroundColor',[0.25 0.8 0.25],'CallBack', @RunAllPressed);
+  IRMA1Show = uicontrol('Style','PushButton','String','Show Reports','Position',[20,60,260,20],'CallBack', @IRMAShow1);
+  IRMA2Show = uicontrol('Style','PushButton','String','Show Reports','Position',[280,60,260,20],'CallBack', @IRMAShow2);
+  ToolsButton = uicontrol('Style','PushButton','String','TOOLS','ToolTipString','Open LOBSTER Tools folder','Position',[20,10,60,20],'CallBack', @ToolsPressed);
+  RunAllButton = uicontrol('Style','PushButton','String','Run All','Position',[130,10,80,20],'ForegroundColor',[1 1 1],'BackgroundColor',[0.25 0.8 0.25],'ToolTipString','Run all steps sequentially','CallBack', @RunAllPressed);
+  Disp = uicontrol('Style','ToggleButton','String','Batch','Position',[210,10,80,20],'ToolTipString','Hide/Show journal output','CallBack', @DispButtonPressed);
+  State = uicontrol('Style','Edit','String','','Position',[290,10,120,20],'Enable','off');
   Documentation = uicontrol('Style','PushButton','String','HELP','Position',[460,10,80,20],'ToolTipString','Open LOBSTER tutorial','CallBack', @DocumentationPressed);
-  State = uicontrol('Style','Edit','String','','ForegroundColor',[1 0 0],'Position',[20,10,120,20]);
   S.Disp = Disp;
   S.Dim = Dim;
   S.Export = Export;
@@ -385,7 +386,7 @@ function LOBSTER
           end
           set(State, 'String', '');
           set(h,'ForegroundColor',[0 0 0]);
-          winopen(GetFullPath(ReportFolder));
+          %winopen(GetFullPath(ReportFolder));
           if ~isempty(ExportMeshFolder)
             winopen(GetFullPath(ExportMeshFolder));
           end
@@ -463,7 +464,7 @@ function LOBSTER
           end
           set(State, 'String', '');
           set(h,'ForegroundColor',[0 0 0]);
-          winopen(GetFullPath(ReportFolder));
+          %winopen(GetFullPath(ReportFolder));
           if ~isempty(ExportMeshFolder)
             winopen(GetFullPath(ExportMeshFolder));
           end
@@ -474,26 +475,20 @@ function LOBSTER
   end
 
   function IRMAShow1(h, eventdata)
-    Files = dir(strcat([ReportFolderPath1.String '*.csv']));
-    if(ReportFolderPath1.String(1) == '.')
-        pre = pwd;
-    else
-        pre = '';
-    end
-    for i = 1:min(numel(Files),3)
-        open(strcat([pre ReportFolderPath1.String Files(i).name]));
+    try
+        if numel(ReportFolderPath1.String)>1
+            eval('winopen(GetFullPath(ReportFolderPath1.String))');
+        end
+    catch    
     end
   end
 
   function IRMAShow2(h, eventdata)
-    Files = dir(strcat([ReportFolderPath2.String '*.csv']));
-    if(ReportFolderPath2.String(1) == '.')
-        pre = pwd;
-    else
-        pre = '';
-    end
-    for i = 1:min(numel(Files),3)
-        open(strcat([pre ReportFolderPath2.String Files(i).name]));
+    try
+        if numel(ReportFolderPath2.String)>1
+            eval('winopen(GetFullPath(ReportFolderPath2.String))');
+        end
+    catch    
     end
   end
 
@@ -533,7 +528,7 @@ function LOBSTER
     if get(Disp, 'Value') == 0
       set(Disp, 'String', 'Batch');
     else
-      set(Disp, 'String', 'Adjust');
+      set(Disp, 'String', 'Show');
     end;  
   end
 
@@ -585,7 +580,7 @@ function LOBSTER
              case 0
                 set(Disp, 'String', 'Batch');
              case 1
-                set(Disp, 'String', 'Adjust');
+                set(Disp, 'String', 'Show');
          end
          switch get(Export, 'Value')
              case 0
@@ -633,6 +628,10 @@ function LOBSTER
       
   function DocumentationPressed(h, eventdata)
     web('https://sebastients.github.io/user_guide.html');
+  end
+
+  function ToolsPressed(h, eventdata)
+    eval('winopen(GetFullPath(''./Tools''))');
   end
 
   function ExitPressed(h, eventdata)
