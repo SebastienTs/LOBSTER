@@ -1,3 +1,7 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% This script converts a LOBSTER bricked 3D image into a folder of slices
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 BricksFolder = uigetdir(pwd,'Bricks folder');
 ExportFolder = uigetdir(pwd,'Slices folder (export)');
 

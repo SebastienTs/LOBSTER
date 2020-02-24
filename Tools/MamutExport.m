@@ -2,18 +2,21 @@
 %% This script converts LOBSTER CSV results from tracked objects into
 %% Trackmate/Mamut file format. Mamut files can also be imported in Mastodon.
 %%
-%% Select BigDataViewer XML image file (same image as used for tracking)
-%% Select LOBSTER report folder (tracking reports CSV files)
-%% Set size of the spots to display
+%% 1) Select BigDataViewer XML image file (same image as used for tracking)
+%% 2) Select LOBSTER tracking output folder (label masks + division file)
+%% 3) Select LOBSTER reports folder (tracking reports CSV files)
+%% 4) Set spots display size (radius in pixels)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+%% Init
 clear all;
 close all;
 clc;
 
 %% File/folder selection
-[ImageXML,pathXML] = uigetfile('*.xml');
-RepFolder = uigetdir('','Select LOBSTER report folder');
+[ImageXML,pathXML] = uigetfile('*.xml','Select BigDataViewer XML file');
+TrackFolder = uigetdir('','Select LOBSTER tracking output folder');
+RepFolder = uigetdir('','Select LOBSTER reports folder');
 ExportFileName = [pathXML '/' ImageXML(1:end-4) '_mamut.xml'];
 
 %% Set spot size
@@ -57,7 +60,7 @@ BaseName = FileName(1:idx-1);
 %% Dump LOBSTER results CSV files to arrays
 warning('OFF', 'MATLAB:table:ModifiedVarnames');
 warning('OFF', 'MATLAB:table:ModifiedAndSavedVarnames');
-if exist([RepFolder '\zzz_DivLog.csv'],'file')
+if exist([TrackFolder '\zzz_DivLog.csv'],'file')
     D = table2array(readtable([RepFolder '\zzz_DivLog.csv']));
 else
     D = [0 0 0];
