@@ -1,0 +1,1 @@
+"matlab.exe" -nodisplay -nosplash - nodesktop -r "cd('%~dp0');init;LOBSTER;"

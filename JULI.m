@@ -25,7 +25,7 @@ function JULI(MonitoredFolder,ErrorLogFile,sourcemail,password)
     %% Parse arguments
     if nargin < 2
         error('JULI requires at least 2 arguments');
-    end
+	end
     if nargin == 2
         sourcemail = '';
         password = '';
@@ -54,7 +54,11 @@ function JULI(MonitoredFolder,ErrorLogFile,sourcemail,password)
     while 1
         
         try
-            
+        
+		disp(['Monitored job folder: ' MonitoredFolder ' (copy jobs to process)']);
+		disp(['Error log file: ' ErrorLogFile]);
+		disp(['Source email: ' sourcemail]);
+		
         %% Read file names of all jobs currently in folder
         files = dir([MonitoredFolder '/*.m']);
         %% Randomize file name to avoid alphabetical priority
