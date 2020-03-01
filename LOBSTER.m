@@ -9,7 +9,7 @@ function LOBSTER
     indxs = find((str=='/')|(str=='\'));
     cd(str(1:indxs(end)));
   end
-
+  
   indxst = [];
   indxen = [];
   indxpar = [];
@@ -18,7 +18,6 @@ function LOBSTER
   funct1params = [];
   funct1argin = [];
   funct1argout = [];
-  
   global S;
   global InputFolder;
   global OutputFolder;
@@ -41,10 +40,10 @@ function LOBSTER
   Dim = uicontrol('Style','ToggleButton','String','2D','Position',[20,400,60,20],'ToolTipString','2D/3D Image','CallBack', @DimButtonPressed);
   TL = uicontrol('Style','ToggleButton','String','-','Position',[20,380,60,20],'ToolTipString','Set to TL if Journal 2 is time-lapse','CallBack', @TLButtonPressed);
   SklFormat = uicontrol('Style','ToggleButton','String','SWC','Position',[260,380,60,20],'ToolTipString','Exportation format for filament network','CallBack', @SklFormatButtonPressed);
-  ZRatio = uicontrol('Style','Edit','String','1','Position',[140,400,60,20],'ToolTipString','Image ZRatio (3D only)');
+  ZRatio = uicontrol('Style','Edit','String','1','Position',[140,400,60,20],'ToolTipString','Image ZRatio (3D only)','Enable','off');
   Export = uicontrol('Style','ToggleButton','String','NoExport','Position',[80,400,60,20],'ToolTipString','Export to 3D model','CallBack', @ExportButtonPressed);
-  MeshDSRatio = uicontrol('Style','Edit','String','0.25','Position',[200,400,60,20],'ToolTipString','STL mesh vertex keep fraction (0 - 1, Export only)');
-  SamplingStep = uicontrol('Style','Edit','String','4','Position',[260,400,60,20],'ToolTipString','SWC/OBJ filament network sampling step (pix, Export only)');
+  MeshDSRatio = uicontrol('Style','Edit','String','0.25','Position',[200,400,60,20],'ToolTipString','STL mesh vertex keep fraction (0 - 1, Export only)','Enable','off');
+  SamplingStep = uicontrol('Style','Edit','String','4','Position',[260,400,60,20],'ToolTipString','SWC/OBJ filament network sampling step (pix, Export only)','Enable','off');
   ChanFolderButton = uicontrol('Style','PushButton','String','C1','Position',[80,380,20,20],'ToolTipString','Possible source folder for intensity channel','CallBack', @ChannelFolderPressed);
   ChanFolderSet = uicontrol('Style','Edit','String','','ToolTipString','Placeholder for intensity measurement channel folder','Position',[100,380,160,20]);
   SaveButton = uicontrol('Style','PushButton','String','Save','Position',[360,400,60,20],'ToolTipString','Save project','CallBack', @saveState);
@@ -262,7 +261,7 @@ function LOBSTER
           set(Interface,'Enable','off');
           try
             switch Disp.String
-              case 'Adjust'
+              case 'Show'
                 eval('[InputFolder OutputFolder] = JENI(Journal1Name.String,InputFolderPath1.String,OutputFolder);');
                 Script = strcat([Script char(10) 'JENI(''' Journal1Name.String ''',''' InputFolderPath1.String ''',''' OutputFolder ''');']); 
               case 'Batch'
@@ -305,7 +304,7 @@ function LOBSTER
           set(Interface,'Enable','off');
           try
               switch Disp.String
-                  case 'Adjust'
+                  case 'Show'
                     eval('[InputFolder OutputFolder] = JENI(Journal2Name.String,InputFolderPath2.String,OutputFolder);');
                     Script = strcat([Script char(10) 'JENI(''' Journal2Name.String ''',''' InputFolderPath2.String ''',''' OutputFolder ''');']); 
                   case 'Batch'
@@ -519,8 +518,14 @@ function LOBSTER
   function DimButtonPressed(h, eventdata)
     if get(Dim, 'Value') == 0
       set(Dim, 'String', '2D');
+      set(ZRatio,'Enable','off');
+      set(MeshDSRatio,'Enable','off');
+      set(SamplingStep,'Enable','off');
     else
       set(Dim, 'String', '3D');
+      set(ZRatio,'Enable','on');
+      set(MeshDSRatio,'Enable','on');
+      set(SamplingStep,'Enable','on');
     end
   end
 
@@ -529,7 +534,7 @@ function LOBSTER
       set(Disp, 'String', 'Batch');
     else
       set(Disp, 'String', 'Show');
-    end;  
+    end  
   end
 
   function ExportButtonPressed(h, eventdata)
@@ -573,9 +578,15 @@ function LOBSTER
          switch get(Dim, 'Value')
              case 0
                 set(Dim, 'String', '2D');
+                set(ZRatio,'Enable','off');
+                set(MeshDSRatio,'Enable','off');
+                set(SamplingStep,'Enable','off');
              case 1
                 set(Dim, 'String', '3D');
-         end
+                set(ZRatio,'Enable','on');
+                set(MeshDSRatio,'Enable','on');
+                set(SamplingStep,'Enable','on');
+         end 
          switch get(Disp, 'Value')
              case 0
                 set(Disp, 'String', 'Batch');
