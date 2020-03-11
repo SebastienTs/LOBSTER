@@ -1,6 +1,6 @@
 clc;
 delete(gcf);
-lobsterver = '1.0';
+lobsterver = '1.1';
 
 %% Force path to LOBSTER root on start of JENI (assuming it is already in the paths)
 str = which('init');
